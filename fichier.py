@@ -97,11 +97,8 @@ def RecupAbstract(fichier):
             tableau_base[i] = line
             i+=1
     file.close()
-        # traitement du tableau
-        # Traitement des lignes où il y a rien au début
-    longueur_tab_base= len(tableau_base)
-    longueur_final_tab = 0
-    # print(tableau_base[1][0:5])
+
+    # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
     x = 0
     tableau_index = [0] * len(tableau_base)
     for i in range(len(tableau_base)):
@@ -109,6 +106,8 @@ def RecupAbstract(fichier):
             # print("hey")
             x+=1
             tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
+    
+    # Suppression des lignes où il y a 5 espaces au début
     d = 0
     for v in range(len(tableau_index)):
         if(tableau_index[v]==1):
@@ -116,8 +115,16 @@ def RecupAbstract(fichier):
         else:
             d += 1
     for i in range(len(tableau_base)):
-        print(tableau_base[i])          
-    
+        print(tableau_base[i])
+        
+    # Suppression de la fin des lignes à partir de là où il y a 5 espaces
+    # Trouver l'index 
+    # for x in tableau_base:
+    #     index = x.find("      ")
+    #     print("Espaces trouvées :", index)
+            
+        #supprimer tout ce qu'il y a à partir du premier espace
+
 def RecupTitlesInATable(path):
     print("Récupération des titres des fichiers txt du dossier "+path+" insérés dans un tableau")
     tableauDesFichiers = os.listdir(path)
