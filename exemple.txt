@@ -1,5 +1,9 @@
-preamble: Nom du fichier
-titre: Titre
-auteur: Auteur1, Auteur2, Auteur3
-abstract: Ceci est le resumé du pdf
-biblio: Reference bibliographique
+abdel
+______________________________
+Les cacatoesques
+______________________________
+hicham,walid,abdel
+______________________________
+dans ce pdf on parrle des cacatoesques mdr loll
+______________________________
+source : cerveau
