@@ -1,5 +1,7 @@
 import os
 import sys
+import shutil
+
 
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
 def RecupNamesOfTheTxtFiles(path):
@@ -16,7 +18,7 @@ def DeleteDotTxtFromAStringTable(table):
 # Supprimer le dossier Apres_Analyse s'il existe, le créer après vérification
 def CreateAfterDeleteDirectory(folderName: str):
     if os.path.exists(folderName):
-        os.remove(folderName)
+        shutil.rmtree(folderName)
         print(folderName+" directory deleted")
     # Création du dossier folderName
     os.mkdir(folderName)
@@ -37,7 +39,7 @@ def SuppSpacesFromString(name: str):
 
 # Créer tous les fichiers d'un tableau ayant le même nom sans les espaces
 def CreateFileInAFolder(fileName: str, folderName: str):
-    print("Création du fichier :"+fileName + "dans le directory :" + folderName)
+    print("Création du fichier : "+fileName + "dans le directory :" + folderName)
     # for i in range(len(tableauDesTxtSansLeTxt)):
     nom = fileName+".txt"
     f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
