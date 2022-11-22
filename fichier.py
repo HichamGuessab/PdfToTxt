@@ -4,7 +4,7 @@ import sys
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
 
 # Sous dossier contenant les fichier TXT à analyser
-# sous_dossier = sys.argv[1]
+sous_dossier = sys.argv[1]
 
 
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
@@ -159,6 +159,50 @@ def RecupTitlesInATable(path):
         print("Récupération des titres")
 
 
+        
+def RecupTitre(filePath):
+    connectors = ["with", "without", "of", "for", "An"] # Mots de liaisons
+    skipCharacters = ["From", "Journal"] # Mot qui ne font pas parti du titre
+    file1 = open(filePath, 'r')
+    titre = ""
+
+    ligne = file1.readline()
+    liste = list(ligne.split(" ")) # Récupérer la ligne sous forme de liste
+    taille = len(liste)
+
+    if any(x in liste[0] for x in skipCharacters): # Si on rencontre un caractère qui ne fait pas parti du titre
+        ligne = file1.readline() # Passer à la ligne suivante
+
+        while(not ligne.strip()): # Tant qu'on rencontre des lignes vides, on passe aux suivantes
+            ligne = file1.readline()
+
+    titre += ligne # Ajout de la première ligne de titre
+    liste = list(ligne.split(" "))
+    taille = len(liste)
+    if any(x in liste[taille-1] for x in connectors): # Si on rencontre un connecteur dans la première ligne
+        ligne = file1.readline() # On passe à la ligne suivante
+        titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
+    else :
+        ligne = file1.readline() # Sinon on passe à la ligne suivante 
+        if any(x in ligne for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
+            titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
+
+    file1.close()
+    finalTitre = ""
+    for t in titre.split(): # On ajoute les éléments du tableau contenant tout les mots du titre dans notre titre final
+        finalTitre+=t
+        finalTitre+=" "
+    print(finalTitre)
+
+
+""" Test pour récupérer les titres
+
+Tab = RecupNamesOfThePdfFiles(sous_dossier)
+for i in range(0,10):
+    RecupTitre(sous_dossier+"/"+Tab[i])
+
+"""
+
 
 
 # On parcourt chaque fichier du dossier "Pdftotext"
@@ -175,9 +219,12 @@ def RecupTitlesInATable(path):
 #     f.write()
 #     f.close()
 
+"""
 x = os.listdir("Pdftotext")
 for i in x:
     print("--------------------------------------------------------")
     print(i)
     print("--------------------------------------------------------")
     RecupAbstract("Pdftotext/"+i)
+
+"""
