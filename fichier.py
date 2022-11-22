@@ -105,11 +105,10 @@ def RecupAbstract(fichier):
     x = 0
     tableau_index = [0] * len(tableau_base)
     for i in range(len(tableau_base)):
-        if(tableau_base[i][0:4]=="    "):
+        if(tableau_base[i][0:5]=="     "):
             # print("hey")
             x+=1
             tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
-    v = 0
     d = 0
     for v in range(len(tableau_index)):
         if(tableau_index[v]==1):
