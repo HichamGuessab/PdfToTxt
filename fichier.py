@@ -1,14 +1,8 @@
 import os
 import sys
 
-# Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
-
-# Sous dossier contenant les fichier TXT à analyser
-sous_dossier = sys.argv[1]
-
-
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
-def RecupNamesOfThePdfFiles(path):
+def RecupNamesOfTheTxtFiles(path):
     print("Récupération des titres des PDF dans un tableau")
     tableau_des_TXT = os.listdir(path)                                  # Tableau contenant les nom des fichiers du sous_dossier AVEC le ".txt"
     return tableau_des_TXT
@@ -20,37 +14,70 @@ def DeleteDotTxtFromAStringTable(table):
     return tableau_des_TXT_sans_le_txt
 
 # Supprimer le dossier Apres_Analyse s'il existe, le créer après vérification
-def CreateAfterDeleteDirectory():
-    if os.path.exists("Apres_Analyse"):
-        os.remove("Apres_Analyse")
-        print("'Apres_Analyse' directory deleted")
-    # Création du dossier "Apres_Analyse"
-    os.mkdir("Apres_Analyse")
-    print("'Apres_Analyse' directory created")
+def CreateAfterDeleteDirectory(folderName: str):
+    if os.path.exists(folderName):
+        os.remove(folderName)
+        print(folderName+" directory deleted")
+    # Création du dossier folderName
+    os.mkdir(folderName)
+    print(folderName+" directory created")
 
 # Supprimer les espaces des String d'un tableau de String
 def SuppSpacesFromStringTables(stringTable):
-    print("Suppression des espaces des String d'un tableau de String")
+    # print("Suppression des espaces des String d'un tableau de String")
     for i in range(len(stringTable)):
         stringTable[i] = SuppSpacesFromString(stringTable[i])
     return stringTable
 
 # Supprimer les espaces d'un String
 def SuppSpacesFromString(name: str):
-    print("Suppression des espaces d'un String")
+    # print("Suppression des espaces d'un String")
     name.replace(" ", "_")
     return name
 
 # Créer tous les fichiers d'un tableau ayant le même nom sans les espaces
-def CreateFiles(tableauDesTxtSansLeTxt):
-    print("Création des fichiers")
-    for i in range(len(tableauDesTxtSansLeTxt)):
-        nom = tableauDesTxtSansLeTxt[i]+".txt"
-        f = open("Apres_Analyse/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+def CreateFileInAFolder(fileName: str, folderName: str):
+    print("Création du fichier :"+fileName + "dans le directory :" + folderName)
+    # for i in range(len(tableauDesTxtSansLeTxt)):
+    nom = fileName+".txt"
+    f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+    f.close()
 
-# Récupérer le titre d'un fichier txt
+# Recupérer le titre d'un fichier (!= nom d'un fichier)
 def RecupTitle(fichier):
-    print("Récupération du titre d'un fichier")
+    connectors = ["with", "without", "of", "for", "An"] # Mots de liaisons
+    skipCharacters = ["From", "Journal"] # Mot qui ne font pas parti du titre
+    file1 = open(fichier, 'r')
+    titre = ""
+
+    ligne = file1.readline()
+    liste = list(ligne.split(" ")) # Récupérer la ligne sous forme de liste
+    taille = len(liste)
+
+    if any(x in liste[0] for x in skipCharacters): # Si on rencontre un caractère qui ne fait pas parti du titre
+        ligne = file1.readline() # Passer à la ligne suivante
+
+        while(not ligne.strip()): # Tant qu'on rencontre des lignes vides, on passe aux suivantes
+            ligne = file1.readline()
+
+    titre += ligne # Ajout de la première ligne de titre
+    liste = list(ligne.split(" "))
+    taille = len(liste)
+    if any(x in liste[taille-1] for x in connectors): # Si on rencontre un connecteur dans la première ligne
+        ligne = file1.readline() # On passe à la ligne suivante
+        titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
+    else :
+        ligne = file1.readline() # Sinon on passe à la ligne suivante 
+        if any(x in ligne for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
+            titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
+
+    file1.close()
+    finalTitre = ""
+    for t in titre.split(): # On ajoute les éléments du tableau contenant tout les mots du titre dans notre titre final
+        finalTitre+=t
+        finalTitre+=" "
+    # print(finalTitre)
+    return finalTitre
 
 # Récupérer l'abstract d'un fichier
 def RecupAbstract(fichier):
@@ -149,82 +176,62 @@ def RecupAbstract(fichier):
         tableau_base[i] = tableau_base[i][:index]
         
     # print("APRES suppression des lignes d'après")
-    for i in range(len(tableau_base)):
-        print(tableau_base[i])
-
-def RecupTitlesInATable(path):
-    print("Récupération des titres des fichiers txt du dossier "+path+" insérés dans un tableau")
-    tableauDesFichiers = os.listdir(path)
-    for i in range(len(tableauDesFichiers)) :
-        print("Récupération des titres")
-
-
-        
-def RecupTitre(filePath):
-    connectors = ["with", "without", "of", "for", "An"] # Mots de liaisons
-    skipCharacters = ["From", "Journal"] # Mot qui ne font pas parti du titre
-    file1 = open(filePath, 'r')
-    titre = ""
-
-    ligne = file1.readline()
-    liste = list(ligne.split(" ")) # Récupérer la ligne sous forme de liste
-    taille = len(liste)
-
-    if any(x in liste[0] for x in skipCharacters): # Si on rencontre un caractère qui ne fait pas parti du titre
-        ligne = file1.readline() # Passer à la ligne suivante
-
-        while(not ligne.strip()): # Tant qu'on rencontre des lignes vides, on passe aux suivantes
-            ligne = file1.readline()
-
-    titre += ligne # Ajout de la première ligne de titre
-    liste = list(ligne.split(" "))
-    taille = len(liste)
-    if any(x in liste[taille-1] for x in connectors): # Si on rencontre un connecteur dans la première ligne
-        ligne = file1.readline() # On passe à la ligne suivante
-        titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
-    else :
-        ligne = file1.readline() # Sinon on passe à la ligne suivante 
-        if any(x in ligne for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
-            titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
-
-    file1.close()
-    finalTitre = ""
-    for t in titre.split(): # On ajoute les éléments du tableau contenant tout les mots du titre dans notre titre final
-        finalTitre+=t
-        finalTitre+=" "
-    print(finalTitre)
-
-
-""" Test pour récupérer les titres
-
-Tab = RecupNamesOfThePdfFiles(sous_dossier)
-for i in range(0,10):
-    RecupTitre(sous_dossier+"/"+Tab[i])
-
-"""
-
-
-
-# On parcourt chaque fichier du dossier "Pdftotext"
-# i = 0                               # Pour parcourir le tableau tableau_des_TXT_sans_le_txt en même temps que le tableau tableau_des_TXT
-# for x in tableau_des_TXT:
+    # for i in range(len(tableau_base)):
+    #     print(tableau_base[i])
+    return tableau_base
     
-#     f = open(x)
-    
-#     f.write()
 
+# Test pour récupérer les titres
 
+# Tab = RecupNamesOfThePdfFiles(sous_dossier)
+# for i in range(0,10):
+#     RecupTitle(sous_dossier+"/"+Tab[i])
+
+# Juste pour retenir les fonctions
 # for x in tableau_des_PDF:
 #     f = open('')
 #     f.write()
 #     f.close()
 
-"""
-x = os.listdir("Pdftotext")
-for i in x:
-    print("--------------------------------------------------------")
-    print(i)
-    print("--------------------------------------------------------")
-    RecupAbstract("Pdftotext/"+i)
 
-"""
+# Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
+
+# Sous dossier contenant les fichier TXT à analyser
+# sous_dossier = sys.argv[1]
+
+
+path = "Pdftotext/"
+TableOfNamesOfTxtFilesWithDotTxt = RecupNamesOfTheTxtFiles(path)
+TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = SuppSpacesFromStringTables(TableOfNamesOfTxtFilesWithDotTxt)
+TableOfNamesOfTxtFilesWithoutDotTxt = DeleteDotTxtFromAStringTable(TableOfNamesOfTxtFilesWithDotTxt)
+
+folderName = "Apres_Analyse"
+CreateAfterDeleteDirectory(folderName)
+
+i = 0
+for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
+    # PathFile = fichier d'où l'on va récupérer les informations
+    pathFile = path + x
+    # Créer le fichier "x"
+    CreateFileInAFolder(TableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+    # Ecrire dans le fichier "x"
+    with open(folderName+"/"+ x, "a") as f:
+        # Ecrire le nom de fichier sans espace
+        f.write(TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
+        f.write("\n")
+        # Ecrire le nom du titre
+        f.write(RecupTitle(pathFile)+"\n")
+        f.write("\n")
+        # Ecrire l'abstract
+        tableOfStrings = RecupAbstract(pathFile)
+        for v in range(len(tableOfStrings)):
+            f.write(tableOfStrings[v]+"\n")
+        f.write("\n")
+    i += 1
+
+# for i in TableOfNamesOfTxtFilesWithDotTxt :
+#     print("--------------------------------------------------------")
+#     print(i)
+#     print("--------------------------------------------------------")
+#     RecupAbstract(path+i)
+#     RecupTitle(path+i)
