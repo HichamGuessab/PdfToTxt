@@ -54,76 +54,103 @@ def RecupTitle(fichier):
 
 # Récupérer l'abstract d'un fichier
 def RecupAbstract(fichier):
-    keyword = ["Introduction", "INTRODUCTION", "introduction", "Keyword", "keyword", "Keywords", "keywords", "PACS", "pacs"]
-    print("Récupération des résumés de l'auteur")
-    word = "Abstract"
+    keyword = ["Introduction", "INTRODUCTION","I NTRODUCTION", "introduction", "Keyword", "keyword", "Keywords", "keywords", "PACS", "pacs"]
+    # print("Récupération des résumés de l'auteur")
+    word1 = "Abstract"
+    word2 = "ABSTRACT"
     nb_abstract_line = 0
     
     # Chercher la ligne où se situe le mot "Abstract"
+    abstractFound = False
+    j = 0
     file = open(fichier, "r")
     for line in file:
         nb_abstract_line += 1
-        if word in line:
-            print("ABSTRACT found ! Line : ")
-            print(nb_abstract_line)
+        if word1 in line or word2 in line:
+            # print("ABSTRACT found ! Line : ")
+            # print(nb_abstract_line)
+            abstractFound = True
             break
     file.close()
     
     # Chercher la ligne où se situe le KeyWord
     nb_keyword_line = 0
     file = open(fichier, "r")
-    found = False
+    keywordFound = False
 
     for line in file:
-        if found == True:
+        if keywordFound == True:
             break
         nb_keyword_line += 1
         for i in range(len(keyword)):
-            if found == True:
+            if keywordFound == True:
                 break
             if keyword[i] in line:
-                print("KEYWORD found ! Line : ")
-                print(nb_keyword_line)
-                found = True
+                # print("KEYWORD keywordFound ! Line : ")
+                # print(nb_keyword_line)
+                keywordFound = True
 
 # nb_abstract_line est maintenant la ligne où le asbtract se situe
 # nb_keyword_line est maintenant la ligne où le keyword se situe
+    # On doit traiter le cas où le mot "Abstract" n'est pas présent
+    # if(abstractFound == True):
     with open(fichier, "r") as f:
-        lines = f.readlines()[nb_abstract_line:nb_keyword_line-2]
+        lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-2]
         tableau_base = [""] * len(lines)
         i = 0
         # stocker toutes les lignes dans un tableau
         for line in lines:
             tableau_base[i] = line
             i+=1
-    file.close()
+    # else:
+    #     with open(fichier, "r") as f:
+    #         lines = f.readlines()[nb_keyword_line-2:nb_abstract_line-1]
+    #         tableau_base = [""] * len(lines)
+    #         i = 0
+    #         # stocker toutes les lignes dans un tableau
+    #         for line in lines:
+    #             tableau_base[i] = line
+    #             i+=1
+    # file.close()
 
     # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
     x = 0
     tableau_index = [0] * len(tableau_base)
     for i in range(len(tableau_base)):
-        if(tableau_base[i][0:5]=="     "):
+        if(tableau_base[i][0:15]=="               "):
             # print("hey")
             x+=1
             tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
     
-    # Suppression des lignes où il y a 5 espaces au début
+    # Suppression des lignes où il y a des espaces au début
     d = 0
     for v in range(len(tableau_index)):
         if(tableau_index[v]==1):
             tableau_base.pop(d)
         else:
             d += 1
+    # print("AVANT suppression des lignes")
+    # for i in range(len(tableau_base)):
+    #     print(tableau_base[i])
+    
+    # Suppression des espaces au début de toutes les lignes    
+    # print("Tableau sans espaces au début")
     for i in range(len(tableau_base)):
-        print(tableau_base[i])
-        
+        tableau_base[i] = tableau_base[i].lstrip()
     # Suppression de la fin des lignes à partir de là où il y a 5 espaces
     # Trouver l'index 
-    # for x in tableau_base:
-    #     index = x.find("      ")
-    #     print("Espaces trouvées :", index)
-            
-        #supprimer tout ce qu'il y a à partir du premier espace
+    num_line_tab = 0                        # le numéro de la ligne (dans le tableau)
+    i = 0
+    for i in range(len(tableau_base)):
+        num_line_tab+=1
+        index = tableau_base[i].find("         ")
+        # print("Ligne : ", num_line_tab)
+        # print("Espaces trouvées index :", index)
+        tableau_base[i] = tableau_base[i][:index]
+        
+    # print("APRES suppression des lignes d'après")
+    for i in range(len(tableau_base)):
+        print(tableau_base[i])
 
 def RecupTitlesInATable(path):
     print("Récupération des titres des fichiers txt du dossier "+path+" insérés dans un tableau")
@@ -148,4 +175,9 @@ def RecupTitlesInATable(path):
 #     f.write()
 #     f.close()
 
-RecupAbstract("test.txt")
+x = os.listdir("Pdftotext")
+for i in x:
+    print("--------------------------------------------------------")
+    print(i)
+    print("--------------------------------------------------------")
+    RecupAbstract("Pdftotext/"+i)
