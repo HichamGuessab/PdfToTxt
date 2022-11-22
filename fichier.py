@@ -59,7 +59,7 @@ def RecupAbstract(fichier):
     word = "Abstract"
     nb_abstract_line = 0
     
-    # Chercher la ligne où se situe le mot Abstract
+    # Chercher la ligne où se situe le mot "Abstract"
     file = open(fichier, "r")
     for line in file:
         nb_abstract_line += 1
@@ -69,7 +69,7 @@ def RecupAbstract(fichier):
             break
     file.close()
     
-    # Chercher la ligne où se situe le mot KeyWord
+    # Chercher la ligne où se situe le KeyWord
     nb_keyword_line = 0
     file = open(fichier, "r")
     found = False
@@ -86,13 +86,38 @@ def RecupAbstract(fichier):
                 print(nb_keyword_line)
                 found = True
 
+# nb_abstract_line est maintenant la ligne où le asbtract se situe
+# nb_keyword_line est maintenant la ligne où le keyword se situe
     with open(fichier, "r") as f:
         lines = f.readlines()[nb_abstract_line:nb_keyword_line-2]
+        tableau_base = [""] * len(lines)
+        i = 0
+        # stocker toutes les lignes dans un tableau
         for line in lines:
-            print(line, end="")
-    # nb_abstract_line est maintenant la ligne où le asbtract se situe
+            tableau_base[i] = line
+            i+=1
     file.close()
-
+        # traitement du tableau
+        # Traitement des lignes où il y a rien au début
+    longueur_tab_base= len(tableau_base)
+    longueur_final_tab = 0
+    # print(tableau_base[1][0:5])
+    x = 0
+    tableau_index = [0] * len(tableau_base)
+    for i in range(len(tableau_base)):
+        if(tableau_base[i][0:4]=="    "):
+            # print("hey")
+            x+=1
+            tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
+    v = 0
+    d = 0
+    for v in range(len(tableau_index)):
+        if(tableau_index[v]==1):
+            tableau_base.pop(d)
+        else:
+            d += 1
+    for i in range(len(tableau_base)):
+        print(tableau_base[i])          
     
 def RecupTitlesInATable(path):
     print("Récupération des titres des fichiers txt du dossier "+path+" insérés dans un tableau")
