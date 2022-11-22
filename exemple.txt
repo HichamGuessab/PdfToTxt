@@ -1,0 +1,5 @@
+preamble: Nom du fichier
+titre: Titre
+auteur: Auteur1, Auteur2, Auteur3
+abstract: Ceci est le resumé du pdf
+biblio: Reference bibliographique
