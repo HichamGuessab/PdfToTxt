@@ -47,20 +47,25 @@ def CreateFileInAFolder(fileName: str, folderName: str):
 
 # Recupérer le titre d'un fichier (!= nom d'un fichier)
 def RecupTitle(fichier):
-    connectors = ["with", "without", "of", "for", "An"] # Mots de liaisons
+    connectors = ["with", "without", "of", "for", "An", "OF"] # Mots de liaisons
     skipCharacters = ["From", "Journal"] # Mot qui ne font pas parti du titre
     file1 = open(fichier, 'r')
     titre = ""
+    global nb_title_line
+    nb_title_line = 0
 
     ligne = file1.readline()
+    nb_title_line += 1
     liste = list(ligne.split(" ")) # Récupérer la ligne sous forme de liste
     taille = len(liste)
 
     if any(x in liste[0] for x in skipCharacters): # Si on rencontre un caractère qui ne fait pas parti du titre
         ligne = file1.readline() # Passer à la ligne suivante
+        nb_title_line += 1
 
         while(not ligne.strip()): # Tant qu'on rencontre des lignes vides, on passe aux suivantes
             ligne = file1.readline()
+            nb_title_line += 1
 
     titre += ligne # Ajout de la première ligne de titre
     liste = list(ligne.split(" "))
@@ -68,12 +73,14 @@ def RecupTitle(fichier):
     if any(x in liste[taille-1] for x in connectors): # Si on rencontre un connecteur dans la première ligne
         ligne = file1.readline() # On passe à la ligne suivante
         titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
+        nb_title_line += 1
     else :
         ligne = file1.readline() # Sinon on passe à la ligne suivante 
         if any(x in ligne for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
             titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
-
+            nb_title_line += 1
     file1.close()
+    
     finalTitre = ""
     for t in titre.split(): # On ajoute les éléments du tableau contenant tout les mots du titre dans notre titre final
         finalTitre+=t
@@ -87,6 +94,7 @@ def RecupAbstract(fichier):
     # print("Récupération des résumés de l'auteur")
     word1 = "Abstract"
     word2 = "ABSTRACT"
+    global nb_abstract_line 
     nb_abstract_line = 0
     
     # Chercher la ligne où se situe le mot "Abstract"
@@ -103,7 +111,9 @@ def RecupAbstract(fichier):
     file.close()
     
     # Chercher la ligne où se situe le KeyWord
+    global nb_keyword_line
     nb_keyword_line = 0
+    
     file = open(fichier, "r")
     keywordFound = False
 
@@ -146,8 +156,8 @@ def RecupAbstract(fichier):
 
     # Traitement du cas où le mot clé "abstract" n'a pas été trouvé
     if(abstractFound == False):
-        print("Abstract non trouvé")
-        print(nb_keyword_line)
+        # print("Abstract non trouvé")
+        # print(nb_keyword_line)
         j = 0
         for i in range(len(tableau_base)):
             if(tableau_base[i]=="\n"):
@@ -157,12 +167,13 @@ def RecupAbstract(fichier):
                 else:
                     j=0
             if(j == 2):
-                print("oula", i)
+                nb_abstract_line = i+1
+                # print("oula", i)
                 for x in range(i+2):
                     tableau_base.pop(0)
                 break
-        for i in range(len(tableau_base)):
-            print(tableau_base[i])
+        # for i in range(len(tableau_base)):
+        #     print(tableau_base[i])
             
     # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
     x = 0
@@ -204,6 +215,22 @@ def RecupAbstract(fichier):
     #     print(tableau_base[i])
     return tableau_base
     
+def RecupAuteurs(fichier):
+    f = open(fichier, "r")
+    lines = f.readlines()[nb_title_line:nb_abstract_line-1]
+    tableau_base = [""] * len(lines)
+    i = 0
+    # stocker toutes les lignes dans un tableau
+    for line in lines:
+        tableau_base[i] = line
+        # print(tableau_base[i])
+        i+=1
+        
+    # Suppresion des sauts de ligne
+    for i in tableau_base:
+        if (i=="\n"):
+            tableau_base.pop(tableau_base.index(i))
+    return tableau_base
 
 # Test pour récupérer les titres
 
@@ -250,6 +277,11 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         tableOfStrings = RecupAbstract(pathFile)
         for v in range(len(tableOfStrings)):
             f.write(tableOfStrings[v]+"\n")
+        f.write("\n")
+        
+        AuteursTableStrings = RecupAuteurs(pathFile)
+        for v in range(len(AuteursTableStrings)):
+            f.write(AuteursTableStrings[v])
         f.write("\n")
     i += 1
 
