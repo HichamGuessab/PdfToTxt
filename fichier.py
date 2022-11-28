@@ -122,26 +122,48 @@ def RecupAbstract(fichier):
 # nb_abstract_line est maintenant la ligne où le asbtract se situe
 # nb_keyword_line est maintenant la ligne où le keyword se situe
     # On doit traiter le cas où le mot "Abstract" n'est pas présent
-    # if(abstractFound == True):
-    with open(fichier, "r") as f:
-        lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-2]
-        tableau_base = [""] * len(lines)
-        i = 0
-        # stocker toutes les lignes dans un tableau
-        for line in lines:
-            tableau_base[i] = line
-            i+=1
-    # else:
-    #     with open(fichier, "r") as f:
-    #         lines = f.readlines()[nb_keyword_line-2:nb_abstract_line-1]
-    #         tableau_base = [""] * len(lines)
-    #         i = 0
-    #         # stocker toutes les lignes dans un tableau
-    #         for line in lines:
-    #             tableau_base[i] = line
-    #             i+=1
-    # file.close()
+    if(abstractFound == True):
+        with open(fichier, "r") as f:
+            lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-2]
+            tableau_base = [""] * len(lines)
+            i = 0
+            # stocker toutes les lignes dans un tableau
+            for line in lines:
+                tableau_base[i] = line
+                i+=1
+    else:
+        with open(fichier, "r") as f:
+            # On a notre ligne Introduction (nb_keyword_line) mais pas notre mot clé "Abstract"
+            # Faut maintenant stocker dans une liste en remontant le keyword 
+            lines = f.readlines()[0:nb_keyword_line-2]
+            tableau_base = [""] * len(lines)
+            i = 0
+            # stocker toutes les lignes dans un tableau
+            for line in lines:
+                tableau_base[i] = line
+                i+=1
+    file.close()
 
+    # Traitement du cas où le mot clé "abstract" n'a pas été trouvé
+    if(abstractFound == False):
+        print("Abstract non trouvé")
+        print(nb_keyword_line)
+        j = 0
+        for i in range(len(tableau_base)):
+            if(tableau_base[i]=="\n"):
+                j+=1
+                if (tableau_base[i+1]=="\n"):
+                    j+=1
+                else:
+                    j=0
+            if(j == 2):
+                print("oula", i)
+                for x in range(i+2):
+                    tableau_base.pop(0)
+                break
+        for i in range(len(tableau_base)):
+            print(tableau_base[i])
+            
     # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
     x = 0
     tableau_index = [0] * len(tableau_base)
