@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import re
-
+from xml_file import *
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
 def RecupNamesOfTheTxtFiles(path):
     print("Récupération des titres des PDF dans un tableau")
@@ -242,12 +242,13 @@ def RecupReferences(fichier):
     print(numReference)
 
 
-Tab = RecupNamesOfTheTxtFiles("Pdftotext")
-for files in Tab :
-    print(files)
-    RecupReferences("Pdftotext/"+files)
+#Tab = RecupNamesOfTheTxtFiles("Pdftotext")
+#for files in Tab :
 
-
+filename = "exemple.txt"
+sortie = open_file(filename)
+sortie = split_file(sortie)
+generate_xml(sortie)
 # Test pour récupérer les titres
 
 # Tab = RecupNamesOfThePdfFiles(sous_dossier)

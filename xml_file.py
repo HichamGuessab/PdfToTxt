@@ -40,6 +40,7 @@ def split_file(sortie):
 # Fonction qui va generer un fichier xml adapté pour les informations précédemment extraite.
 def generate_xml(sortie):
     path = "txt2XML/" + sortie[0] + ".xml";
+    print("Path : ", path)
     with open (path, "w") as f:
         f.write("<?xml version='1.0' encoding='UTH-8'?>\n")
         #Balise article
