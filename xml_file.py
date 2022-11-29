@@ -39,7 +39,7 @@ def split_file(sortie):
 
 # Fonction qui va generer un fichier xml adapté pour les informations précédemment extraite.
 def generate_xml(sortie):
-    path = "txt2XML/" + sortie[0] + ".xml";
+    path = "txt2XML/" + sortie[0].strip() + ".xml";
     print("Path : ", path)
     with open (path, "w") as f:
         f.write("<?xml version='1.0' encoding='UTH-8'?>\n")
@@ -75,11 +75,11 @@ def generate_xml(sortie):
 
 # Test :
 #print("-------- Test 1 -------- ")
-sortie = open_file(filename)
+#sortie = open_file(filename)
 #print(sortie)
 #print("-------- Test 2 -------- ")
-sortie = split_file(sortie)
+#sortie = split_file(sortie)
 #print(sortie[0])
 #print("-------- Test 3 -------- ")
 #Création d'un fichier xml en prenant en argument le tableau sortie (split de notre fichier txt contenant les informations du pdf)
-generate_xml(sortie)
+#generate_xml(sortie)
