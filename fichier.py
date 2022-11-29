@@ -241,14 +241,77 @@ def RecupReferences(fichier):
             numReference = num
     print(numReference)
 
-"""
-Tab = RecupNamesOfTheTxtFiles("Apres_Analyse")
-for file in Tab :
-    print("Apres_Analyse/"+file)
-    sortie = open_file("Apres_Analyse/"+file)
-    sortie = split_file(sortie)
-    generate_xml(sortie)
-    """
+def ConvertToTxt():
+    path = "Pdftotext/"
+    TableOfNamesOfTxtFilesWithDotTxt = RecupNamesOfTheTxtFiles(path)
+    TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = SuppSpacesFromStringTables(TableOfNamesOfTxtFilesWithDotTxt)
+    TableOfNamesOfTxtFilesWithoutDotTxt = DeleteDotTxtFromAStringTable(TableOfNamesOfTxtFilesWithDotTxt)
+
+    folderName = "Apres_Analyse"
+    CreateAfterDeleteDirectory(folderName)
+
+    i = 0
+    for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
+        # PathFile = fichier d'où l'on va récupérer les informations
+        pathFile = path + x
+        # Créer le fichier "x"
+        CreateFileInAFolder(TableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+        # Ecrire dans le fichier "x"
+        with open(folderName+"/"+ x, "a") as f:
+            # Ecrire le nom de fichier sans espace
+            f.write(TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+
+
+            # Ecrire le nom du titre
+            f.write(RecupTitle(pathFile)+"\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            # Ecrire l'abstract
+            tableOfStrings = RecupAbstract(pathFile)
+            for v in range(len(tableOfStrings)):
+                f.write(tableOfStrings[v]+"\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            AuteursTableStrings = RecupAuteurs(pathFile)
+            for v in range(len(AuteursTableStrings)):
+                f.write(AuteursTableStrings[v])
+            f.write("\n")
+
+            #test pour le xml 
+
+            f.write("______________________________")
+            f.write("\n")
+            f.write("References test"+"\n")
+            f.write("\n")
+        i += 1
+
+def ConvertToXml():
+    Tab = RecupNamesOfTheTxtFiles("Apres_Analyse")
+    for file in Tab :
+        print("Apres_Analyse/"+file)
+        sortie = open_file("Apres_Analyse/"+file)
+        sortie = split_file(sortie)
+        generate_xml(sortie)
+
+if len(sys.argv) == 2:
+    if(sys.argv[1] == "-t"):
+        ConvertToTxt()
+    elif(sys.argv[1] == "-x"):
+        ConvertToTxt()
+        ConvertToXml()
+    else :
+        print("Mauvais argument entré !")
+else :
+    print("Entrez le type de sortie ! (-x) ou (-t)")
+
+
 # Test pour récupérer les titres
 
 # Tab = RecupNamesOfThePdfFiles(sous_dossier)
@@ -266,62 +329,6 @@ for file in Tab :
 
 # Sous dossier contenant les fichier TXT à analyser
 # sous_dossier = sys.argv[1]
-
-
-"""
-path = "Pdftotext/"
-TableOfNamesOfTxtFilesWithDotTxt = RecupNamesOfTheTxtFiles(path)
-TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = SuppSpacesFromStringTables(TableOfNamesOfTxtFilesWithDotTxt)
-TableOfNamesOfTxtFilesWithoutDotTxt = DeleteDotTxtFromAStringTable(TableOfNamesOfTxtFilesWithDotTxt)
-
-folderName = "Apres_Analyse"
-CreateAfterDeleteDirectory(folderName)
-
-i = 0
-for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
-    # PathFile = fichier d'où l'on va récupérer les informations
-    pathFile = path + x
-    # Créer le fichier "x"
-    CreateFileInAFolder(TableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
-    # Ecrire dans le fichier "x"
-    with open(folderName+"/"+ x, "a") as f:
-        # Ecrire le nom de fichier sans espace
-        f.write(TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-
-
-        # Ecrire le nom du titre
-        f.write(RecupTitle(pathFile)+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-
-        # Ecrire l'abstract
-        tableOfStrings = RecupAbstract(pathFile)
-        for v in range(len(tableOfStrings)):
-            f.write(tableOfStrings[v]+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        AuteursTableStrings = RecupAuteurs(pathFile)
-        for v in range(len(AuteursTableStrings)):
-            f.write(AuteursTableStrings[v])
-        f.write("\n")
-
-        #test pour le xml 
-
-        f.write("______________________________")
-        f.write("\n")
-        f.write("References test"+"\n")
-        f.write("\n")
-
-
-    i += 1
-
-"""
 
 # for i in TableOfNamesOfTxtFilesWithDotTxt :
 #     print("--------------------------------------------------------")
