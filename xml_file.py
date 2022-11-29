@@ -30,6 +30,7 @@ filename = "exemple.txt"
 def open_file(file):
     with open (file,"r") as f:
         sortie = f.read()
+    f.close()
     return (sortie)
 
 # Fonction qui va split notre txt et mettre les données separé par les trais, dans un tableau
@@ -42,7 +43,7 @@ def generate_xml(sortie):
     path = "txt2XML/" + sortie[0].strip() + ".xml";
     print("Path : ", path)
     with open (path, "w") as f:
-        f.write("<?xml version='1.0' encoding='UTH-8'?>\n")
+        f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
         #Balise article
         f.write("<article>\n")
         #Balise preamble
@@ -55,11 +56,11 @@ def generate_xml(sortie):
         f.write("</titre>\n")
         #Balise auteur
         f.write("\n<auteur>")
-        f.write(sortie[2])
+        f.write(sortie[3])
         f.write("</auteur>\n")
         #Balise abstract
         f.write("\n<abstract>")
-        f.write(sortie[3])
+        f.write(sortie[2])
         f.write("</abstract>\n")
         #Balise biblio
         f.write("\n<biblio>")
@@ -68,7 +69,8 @@ def generate_xml(sortie):
 
         f.write("\n</article>")
 
-        print("Fichier xml créee !")
+    f.close()
+    print("Fichier xml créee !")
 
 
 

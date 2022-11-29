@@ -1,0 +1,27 @@
+compression_phrases_Prog-Linear-jair.txt
+
+______________________________
+Global Inference for Sentence Compression An Integer Linear Programming Approach 
+
+______________________________
+Sentence compression holds promise for many applications ranging from summarization
+to subtitle generation. Our work views sentence compression as an optimization problem
+and uses integer linear programming (ILP) to infer globally optimal compressions in the
+presence of linguistically motivated constraints. We show how previous formulations of
+sentence compression can be recast as ILPs and extend these models with novel global
+constraints. Experimental results on written and spoken texts demonstrate improvements
+over state-of-the-art models.
+
+
+______________________________
+James Clarke                                                                 jclarke@ed.ac.uk
+Mirella Lapata                                                               mlap@inf.ed.ac.uk
+School of Informatics
+University of Edinburgh
+2 Buccleuch Place
+Edinburgh EH8 9LW, UK
+
+
+______________________________
+References test
+
