@@ -233,12 +233,11 @@ def RecupAuteurs(fichier):
     return tableau_base
 
 def RecupReferences(fichier):
-    num = 0
     numReference = 0
     for line in open(fichier) :
-        num+=1
-        if "References" in line :
+        if "Ref" in line :
             numReference = num
+            break
     print(numReference)
 
 def ConvertToTxt():
@@ -300,6 +299,10 @@ def ConvertToXml():
         sortie = split_file(sortie)
         generate_xml(sortie)
 
+
+RecupReferences("test.txt")
+
+"""
 if len(sys.argv) == 2:
     if(sys.argv[1] == "-t"):
         ConvertToTxt()
@@ -310,7 +313,7 @@ if len(sys.argv) == 2:
         print("Mauvais argument entré !")
 else :
     print("Entrez le type de sortie ! (-x) ou (-t)")
-
+"""
 
 # Test pour récupérer les titres
 
