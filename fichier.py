@@ -4,7 +4,7 @@ import shutil
 import re
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
 def recupNamesOfTheTxtFiles(path):
-    print("Récupération des titres des PDF dans un tableau")
+    #print("Récupération des titres des PDF dans un tableau")
     tableau_des_TXT = os.listdir(path)                                  # Tableau contenant les nom des fichiers du sous_dossier AVEC le ".txt"
     return tableau_des_TXT
 
@@ -44,10 +44,20 @@ def createFileInAFolder(fileName: str, folderName: str):
     f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
     f.close()
 
-def recupIntroduction():
-    return 0
+def recupIntroduction(fichier):
+    Characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
+    numLine = 1
+    file = open(fichier, 'r')
+    for line in file :
+        if any(x in line for x in Characters):
+            break
+        numLine += 1
+    file.close()
+    print(numLine)
 
-path = "Pdftotext"
+    
+
+
+path = "Pdftotext/"
 tab = recupNamesOfTheTxtFiles(path)
-for files in tab :
-    print(files)
+recupIntroduction("Pdftotext/Torres.txt")
