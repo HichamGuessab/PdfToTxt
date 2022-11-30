@@ -3,8 +3,10 @@ import sys
 
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
 
+
+
 # Sous dossier contenant les fichier TXT à analyser
-sous_dossier = sys.argv[1]
+#sous_dossier = sys.argv[1]
 
 
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
@@ -59,8 +61,36 @@ def RecupAbstract(fichier):
 def RecupTitlesInATable(path):
     print("Récupération des titres des fichiers txt du dossier "+path+" insérés dans un tableau")
     tableauDesFichiers = os.listdir(path)
-    for i in range(len(tableauDesFichiers)) :
+    #for i in range(len(tableauDesFichiers)) :
         
+def recupCorps(fichier):
+        keywordsIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
+        keywordFinCorps = ["Discussion", "DISCUSSION", "discussions", "Discussions", "DISCUSSIONS", "Conclusion", "CONCLUSION", "conclusion"]
+        keywordDebutCorps = ["2.", "2", "2", "II.", "II"]
+        file1 = open(fichier, 'r')
+        lines = file1.readlines()
+        corps = list()
+        debutCorps=False
+        debutIntro=False
+        for line in lines :
+            if not debutCorps :
+                if not debutIntro :
+                    if any(x in line for x in keywordsIntro) :
+                        debutIntro=True
+                else :
+                    words = list(line.split(" "))
+                    if words[0] in keywordDebutCorps :
+                        debutCorps=True
+            else :
+                if any(x in line for x in keywordFinCorps) and len(line) < 40 :
+                    break;
+                else :
+                    corps.append(line)
+        for line in corps :
+            print(line)
+        return corps
+    
+recupCorps("CORPUS_TRAIN/Torres.txt")
 
 
 # On parcourt chaque fichier du dossier "Pdftotext"
