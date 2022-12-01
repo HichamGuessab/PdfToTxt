@@ -89,8 +89,6 @@ def recupCorps(fichier):
         for line in corps :
             print(line)
         return corps
-    
-recupCorps("CORPUS_TRAIN/Torres.txt")
 
 
 # On parcourt chaque fichier du dossier "Pdftotext"
