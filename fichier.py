@@ -1,6 +1,7 @@
 import os
 import sys
-<<<<<<< HEAD
+import shutil
+import re
 
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
 
@@ -9,11 +10,6 @@ import sys
 # Sous dossier contenant les fichier TXT à analyser
 #sous_dossier = sys.argv[1]
 
-
-=======
-import shutil
-import re
->>>>>>> 016996867882b869cbab69fe4660c2f32a2e901f
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
 def recupNamesOfTheTxtFiles(path):
     #print("Récupération des titres des PDF dans un tableau")
