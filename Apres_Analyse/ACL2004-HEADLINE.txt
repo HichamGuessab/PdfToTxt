@@ -33,7 +33,6 @@ schwartz@bbn.com
 stacypre@cs.umd.edu
 
 
-
 ______________________________
 References
 Sabine Bergler, René Witte, Michelle Khalife,
@@ -83,5 +82,3 @@ pages 174–178, Edmonton, Candada.
 
 
 ______________________________
-References test
-

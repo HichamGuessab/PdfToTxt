@@ -59,7 +59,6 @@ florian.boudin@univ-avignon.fr
 juan-manuel.torres@univ-avignon.fr
 marc.elbeze@univ-avignon.fr
 
-
 ______________________________
 References
 
@@ -79,5 +78,3 @@ ACM Press New York, NY, USA.
 
 
 ______________________________
-References test
-

@@ -18,7 +18,6 @@ Japan Advanced Institute of Science and Technology
 1-8, Tatsunokuchi, Ishikawa, 923-1211, JAPAN
 {nguyenml, shimazu, hori, bao, mfukushi}@jaist.ac.jp
 
-
 ______________________________
 References
 A. Borthwick, “A Maximum Entropy Approach
@@ -57,5 +56,3 @@ Basis Function Classifers”, IEEE Trans. Signal Procesing, 45, pp. 2758-2765, 1
 
 
 ______________________________
-References test
-

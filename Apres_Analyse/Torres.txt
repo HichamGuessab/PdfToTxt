@@ -23,7 +23,6 @@ evaluation measures, divergences.
 ______________________________
 Juan-Manuel Torres-Moreno, Horacio Saggion, Iria da Cunha, Eric SanJuan, and Patricia Velázquez-Morales
 
-
 ______________________________
 Summary Evaluation with and without References
 
@@ -212,5 +211,3 @@ Polibits (42) 2010
 
 
 ______________________________
-References test
-

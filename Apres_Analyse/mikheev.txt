@@ -15,7 +15,6 @@ ______________________________
 Andrei Mikheev∗
 University of Edinburgh
 
-
 ______________________________
 References
 Aberdeen, John S., John D. Burger, David S.
@@ -229,5 +228,3 @@ Association for Computational Linguistics
 
 
 ______________________________
-References test
-

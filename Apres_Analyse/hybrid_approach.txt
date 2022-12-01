@@ -25,7 +25,6 @@ BE-3000 Leuven
 Belgium
 vincent.vandeghinste@ccl.kuleuven.ac.be, yi.pan@ccl.kuleuven.ac.be
 
-
 ______________________________
 References
 G. Booij and A. van Santen. 1995. Morfologie. De
@@ -77,5 +76,3 @@ Rule-based Parsing, focused on Dutch. In Proceedings of CLIN 2003.
 
 
 ______________________________
-References test
-

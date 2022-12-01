@@ -341,7 +341,6 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         f.write("______________________________")
         f.write("\n")
 
-
         # Ecrire le nom du titre
         f.write(RecupTitle(pathFile)+"\n")
         f.write("\n")
@@ -360,7 +359,6 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         for v in range(len(AuteursTableStrings)):
             f.write(AuteursTableStrings[v])
         f.write("\n")
-        f.write("\n")
         f.write("______________________________")
         f.write("\n")
 
@@ -368,13 +366,10 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         for v in range(len(ReferencesTableStrings)):
             f.write(ReferencesTableStrings[v])
         f.write("\n")
-
-        #test pour le xml 
-
         f.write("______________________________")
         f.write("\n")
-        f.write("References test"+"\n")
-        f.write("\n")
+        
+        #test pour le xml 
     i += 1
 
 # def ConvertToXml():

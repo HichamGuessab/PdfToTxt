@@ -23,7 +23,6 @@ University of Edinburgh
 2 Buccleuch Place
 Edinburgh EH8 9LW, UK
 
-
 ______________________________
 References
 Aho, A. V., & Ullman, J. D. (1969). Syntax directed translations and the pushdown assembler. Journal of Computer and System Sciences, 3, 37–56.
@@ -153,5 +152,3 @@ Management Special Issue on Summarization, 43 (6), 1549–1570.
 
 
 ______________________________
-References test
-

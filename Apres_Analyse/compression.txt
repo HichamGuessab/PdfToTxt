@@ -27,7 +27,6 @@ BBN Technologies
 Columbia, MD 21046
 schwartz@bbn.com
 
-
 ______________________________
 References
 L. Bahl, F. Jelinek, and R. Mercer. 1983. A maximum likelihood approach to continuous speech
@@ -165,5 +164,3 @@ L. Zhou and E. Hovy. 2003. Headline summarization at ISI. In Proceedings of the 
 
 
 ______________________________
-References test
-

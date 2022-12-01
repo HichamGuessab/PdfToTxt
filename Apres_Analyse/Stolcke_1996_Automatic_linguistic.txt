@@ -22,7 +22,6 @@ Speech Technology and Research Laboratory
 SRI International, Menlo Park, CA 94025
 stolcke@speech.sri.com ees@speech.sri.com
 
-
 ______________________________
 REFERENCES
 
@@ -55,5 +54,3 @@ for speech disfluencies. In Proceedings IEEE Conference on
 Acoustics, Speech and Signal Processing, volume I, pages 405–
 408, Atlanta, GA, May 1996.
 ______________________________
-References test
-
