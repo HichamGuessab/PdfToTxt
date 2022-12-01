@@ -70,9 +70,9 @@ def recupIntroduction(fichier):
     file.close()
     print(endOfIntroduction)
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
-    lines = file.readlines()[introductionLine:endOfIntroduction-1]
+    intro = file.readlines()[introductionLine:endOfIntroduction-1]
     file.close()
-    return lines
+    return intro
 
 
 
