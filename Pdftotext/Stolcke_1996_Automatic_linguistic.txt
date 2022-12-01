@@ -465,5 +465,3 @@ October 1996.
 for speech disfluencies. In Proceedings IEEE Conference on
 Acoustics, Speech and Signal Processing, volume I, pages 405–
 408, Atlanta, GA, May 1996.
-
-

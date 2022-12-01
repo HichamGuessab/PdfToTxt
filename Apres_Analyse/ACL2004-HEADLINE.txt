@@ -4,36 +4,84 @@ ______________________________
 Hybrid Headlines: Combining Topics and Sentence Compression 
 
 ______________________________
-This paper presents Topiary, a headline-
-generation system that creates very
+Abstract
+This paper presents Topiary, a headlinegeneration system that creates very
 short, informative summaries for news
-stories by combining sentence compres-
-sion and unsupervised topic discovery.
+stories by combining sentence compression and unsupervised topic discovery.
 We will show that the combination of
-linguistically motivated sentence com-
-pression with statistically selected topic
+linguistically motivated sentence compression with statistically selected topic
 terms performs better than either alone,
 according to some automatic summary
-evaluation measures. In addition we de-
-scribe experimental results establishing
+evaluation measures. In addition we describe experimental results establishing
 an appropriate extrinsic task on which to
 measure the effect of summarization on
 human performance. We demonstrate
-the usefulness of headlines in compar-
-ison to full texts in the context of this
+the usefulness of headlines in comparison to full texts in the context of this
 extrinsic task.
 
 ______________________________
-     David Zajic, Bonnie Dorr, Stacy President         Richard Schwartz
-         Department of Computer Science                BBN Technologies
-              University of Maryland           9861 Broken Land Parkway, Suite 156
-             College Park, MD 20742                   Columbia, MD 21046
-     dmzajic,bonnie @umiacs.umd.edu
-                                                    schwartz@bbn.com
-            stacypre@cs.umd.edu
+David Zajic, Bonnie Dorr, Stacy President
+Richard Schwartz
+Department of Computer Science
+BBN Technologies
+University of Maryland
+9861 Broken Land Parkway, Suite 156
+College Park, MD 20742
+Columbia, MD 21046
+dmzajic,bonnie @umiacs.umd.edu
+schwartz@bbn.com
+stacypre@cs.umd.edu
+
 
 
+______________________________
+References
+Sabine Bergler, René Witte, Michelle Khalife,
+Zhuoyan Li, and Frank Rudzicz. 2003. Using
+knowledge-poor coreference resolution for text summarization. In Proceedings of the 2003 Document
+Understanding Conference, Draft Papers, pages 85–
+92, Edmonton, Candada.
+Bonnie Dorr, David Zajic, and Richard Schwartz.
+2003a. Cross-language headline generation for
+hindi. ACM Transactions on Asian Language Information Processing (TALIP), 2:2.
+Bonnie Dorr, David Zajic, and Richard Schwartz.
+2003b. Hedge trimmer: A parse-and-trim approach
+to headline generation. In Proceedings of the HLTNAACL 2003 Text Summarization Workshop, Edmonton, Alberta, Canada, pages 1–8.
+T. Euler. 2002. Tailoring text using topic words: Selection and compression. In Proceedings of 13th
+International Workshop on Database and Expert
+Systems Applications (DEXA 2002), 2-6 September 2002, Aix-en-Provence, France, pages 215–222.
+IEEE Computer Society.
+Kevin Knight and Daniel Marcu. 2000. Statisticsbased summarization – step one: Sentence compression. In The 17th National Conference of
 
+the American Association for Artificial Intelligence
+AAAI2000, Austin, Texas.
+David Lewis. 1992. An evaluation of phrasal and clustered representations on a text categorization task.
+In Proceedings of the 15th annual international
+ACM SIGIR conference on Research and development in information retrieval, pages 37–50, Copenhagen, Denmark.
+Chin-Yew Lin and Eduard Hovy. 2003. Automatic Evaluation of Summaries Using N-gram CoOccurrences Statistics. In Proceedings of the Conference of the North American Chapter of the Association for Computational Linguistics, Edmonton,
+Alberta.
+Ingrid Mårdh. 1980. Headlinese: On the Grammar of
+English Front Page Headlines. Malmo.
+S. Miller, M. Crystal, H. Fox, L. Ramshaw,
+R. Schwartz, R. Stone, and R. Weischedel. 1998.
+Algorithms that Learn to Extract Information; BBN:
+Description of the SIFT System as Used for MUC-7.
+In Proceedings of the MUC-7.
+K. Papineni, S. Roukos, T. Ward, and W. Zhu. 2002.
+Bleu: a Method for Automatic Evaluation of Machine Translation. In Proceedings of Association of
+Computational Linguistics, Philadelphia, PA.
+R. Schwartz, T. Imai, F. Jubala, L. Nguyen, and
+J. Makhoul. 1997. A maximum likelihood model
+for topic classification of broadcast news.
+In
+Eurospeech-97, Rhodes, Greece.
+David Zajic, Bonnie Dorr, Richard Schwartz, and Stacy
+President. 2004. Headline evaluation experiment
+results, umiacs-tr-2004-18. Technical report, University of Maryland Institute for Advanced Computing Studies, College Park, Maryland.
+Liang Zhou and Eduard Hovy. 2003. Headline summarization at isi. In Proceedings of the 2003 Document Understanding Conference, Draft Papers,
+pages 174–178, Edmonton, Candada.
+
+
 ______________________________
 References test
 
