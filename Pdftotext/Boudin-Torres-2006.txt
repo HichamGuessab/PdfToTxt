@@ -5,8 +5,8 @@ Florian Boudin and Marc El-Be`ze Laboratoire Informatique d'Avignon
 florian.boudin@univ-avignon.fr
 marc.elbeze@univ-avignon.fr
 
-Juan-Manuel Torres-Moreno , E´ cole Polytechnique de Montre´al CP 6079 Succ. Centre Ville H3C 3A7
-Montre´al (Que´bec), Canada.
+Juan-Manuel Torres-Moreno , Eï¿½ cole Polytechnique de Montreï¿½al CP 6079 Succ. Centre Ville H3C 3A7
+Montreï¿½al (Queï¿½bec), Canada.
 juan-manuel.torres@univ-avignon.fr
 
 Abstract
@@ -22,7 +22,7 @@ A natural way to go about update summarization would be extracting temporal tags
 In this paper, we propose a scalable sentence scoring method for update summarization derived from MMR. Motivated by the need for relevant novelty, candidate sentences are selected according to a combined criterion of query relevance and dissimilarity with previously read sentences. The rest of the paper is organized as follows. Section 2
 
 23
-Coling 2008: Companion volume ­ Posters and Demonstrations, pages 23­26 Manchester, August 2008
+Coling 2008: Companion volume ï¿½ Posters and Demonstrations, pages 23ï¿½26 Manchester, August 2008
 
 introduces our proposed sentence scoring method and Section 3 presents experiments and evaluates our approach.
 2 Method
@@ -38,7 +38,7 @@ JWe(s, Q)
 
 1 |Q|
 
-·
+ï¿½
 
 max
 qQ mS
@@ -49,25 +49,25 @@ JW(q, m)
 
 where S is the term set of s in which the terms m that already have maximized JW(q, m) are removed. The use of JWe smooths normalization and misspelling errors. Each sentence s is scored using the linear combination:
 
-Sim1(s, Q) =  · cosine(s, Q) + (1 - ) · JWe(s, Q) (2)
+Sim1(s, Q) =  ï¿½ cosine(s, Q) + (1 - ) ï¿½ JWe(s, Q) (2)
 where  = 0.7, optimally tuned on the past DUCs data (2005 and 2006). The system produces a list of ranked sentences from which the summary is constructed by arranging the high scored sentences until the desired size is reached.
 
 2.2 A scalable MMR approach
 MMR re-ranking algorithm has been successfully used in query-oriented summarization (Ye et al., 2005). It strives to reduce redundancy while maintaining query relevance in selected sentences. The summary is constructed incrementally from a list of ranked sentences, at each iteration the sentence which maximizes MMR is chosen:
 
-MMR = arg max [  · Sim1(s, Q)
+MMR = arg max [  ï¿½ Sim1(s, Q)
 sS
-- (1 - ) · max Sim2(s, sj) ] (3)
+- (1 - ) ï¿½ max Sim2(s, sj) ] (3)
 sj E
 where S is the set of candidates sentences and E is the set of selected sentences.  represents an interpolation coefficient between sentence's relevance and non-redundancy. Sim2(s, sj) is a normalized Longest Common Substring (LCS) measure between sentences s and sj. Detecting sentence rehearsals, LCS is well adapted for redundancy removal.
 We propose an interpretation of MMR to tackle the update summarization issue. Since Sim1 and Sim2 are ranged in [0, 1], they can be seen as probabilities even though they are not. Just as rewriting (3) as (NR stands for Novelty Relevance):
 
-NR = arg max [  · Sim1(s, Q)
+NR = arg max [  ï¿½ Sim1(s, Q)
 sS
 
 + (1 - )
 
-·
+ï¿½
 
 (1
 
@@ -94,7 +94,7 @@ SMMR(s) = Sim1(s, Q)
 
 f (H)
 
-·
+ï¿½
 
 1
 
@@ -247,37 +247,32 @@ ROUGE-2
 ROUGE-SU4
 0.08247 0.13245 0.13509 0.13701 0.13781 0.13886 0.14306 0.14779
 
-Hachey, B., G. Murray, and D. Reitter. 2005. The Embra System at DUC 2005: Query-oriented Multidocument Summarization with a Very Large Latent Semantic Space. In Document Understanding Conference (DUC).
-Hickl, A., K. Roberts, and F. Lacatusu. 2007. LCC's GISTexter at DUC 2007: Machine Reading for Update Summarization. In Document Understanding Conference (DUC).
-Lin, Z., T.S. Chua, M.Y. Kan, W.S. Lee, L. Qiu, and S. Ye. 2007. NUS at DUC 2007: Using Evolutionary Models of Text. In Document Understanding Conference (DUC).
 
 Table 1: ROUGE average recall scores computed
-
-Lin, C.Y. 2004. Rouge: A Package for Automatic Evaluation of Summaries. In Workshop on Text Sum-
-
-on the DUC 2007 update corpus.
-
-marization Branches Out, pages 25­26.
 
 4 Discussion and Future Work
 In this paper we have described SMMR, a scalable sentence scoring method based on MMR that achieves very promising results. An important aspect of our sentence scoring method is that it does not requires re-ranking nor linguistic knowledge, which makes it a simple and fast approach to the issue of update summarization. It was pointed out at the DUC 2007 workshop that Question Answering and query-oriented summarization have been converging on a common task. The value added by summarization lies in the linguistic quality. Approaches mixing IR techniques are well suited for query-oriented summarization but they require intensive work for making the summary fluent and coherent. Among the others, this is a point that we think is worthy of further investigation.
 Acknowledgments
 This work was supported by the Agence Nationale de la Recherche, France, project RPM2.
 
-Mani, I. and M.T. Maybury. 1999. Advances in Automatic Text Summarization. MIT Press.
-Mani, I. and G. Wilson. 2000. Robust temporal processing of news. In 38th Annual Meeting on Association for Computational Linguistics, pages 69­76. Association for Computational Linguistics Morristown, NJ, USA.
-Murray, G., S. Renals, and J. Carletta. 2005. Extractive Summarization of Meeting Recordings. In Ninth European Conference on Speech Communication and Technology. ISCA.
-Salton, G., A. Wong, and C. S. Yang. 1975. A vector space model for automatic indexing. Communications of the ACM, 18(11):613­620.
-Swan, R. and J. Allan. 2000. Automatic generation of overview timelines. In 23rd annual international ACM SIGIR conference on Research and development in information retrieval, pages 49­56.
-Winkler, W. E. 1999. The state of record linkage and current research problems. In Survey Methods Section, pages 73­79.
-Witte, R., R. Krestel, and S. Bergler. 2007. Generating Update Summaries for DUC 2007. In Document Understanding Conference (DUC).
-
 References
-Boudin, F. and J.M. Torres-Moreno. 2007. A Cosine Maximization-Minimization approach for UserOriented Multi-Document Update Summarization. In Recent Advances in Natural Language Processing (RANLP), pages 81­87.
+Boudin, F. and J.M. Torres-Moreno. 2007. A Cosine Maximization-Minimization approach for UserOriented Multi-Document Update Summarization. In Recent Advances in Natural Language Processing (RANLP), pages 81ï¿½87.
 
+Carbonell, J. and J. Goldstein. 1998. The use of MMR, diversity-based reranking for reordering documents and producing summaries. In 21st annual international ACM SIGIR conference on Research and development in information retrieval, pages 335ï¿½336. ACM Press New York, NY, USA.
+
+Hachey, B., G. Murray, and D. Reitter. 2005. The Embra System at DUC 2005: Query-oriented Multidocument Summarization with a Very Large Latent Semantic Space. In Document Understanding Conference (DUC).
+Hickl, A., K. Roberts, and F. Lacatusu. 2007. LCC's GISTexter at DUC 2007: Machine Reading for Update Summarization. In Document Understanding Conference (DUC).
+Lin, Z., T.S. Chua, M.Y. Kan, W.S. Lee, L. Qiu, and S. Ye. 2007. NUS at DUC 2007: Using Evolutionary Models of Text. In Document Understanding Conference (DUC).
+Lin, C.Y. 2004. Rouge: A Package for Automatic Evaluation of Summaries. In Workshop on Text Sum-
+marization Branches Out, pages 2526.
+Mani, I. and M.T. Maybury. 1999. Advances in Automatic Text Summarization. MIT Press.
+Mani, I. and G. Wilson. 2000. Robust temporal processing of news. In 38th Annual Meeting on Association for Computational Linguistics, pages 69ï¿½76. Association for Computational Linguistics Morristown, NJ, USA.
+Murray, G., S. Renals, and J. Carletta. 2005. Extractive Summarization of Meeting Recordings. In Ninth European Conference on Speech Communication and Technology. ISCA.
+Salton, G., A. Wong, and C. S. Yang. 1975. A vector space model for automatic indexing. Communications of the ACM, 18(11):613ï¿½620.
+Swan, R. and J. Allan. 2000. Automatic generation of overview timelines. In 23rd annual international ACM SIGIR conference on Research and development in information retrieval, pages 49ï¿½56.
+Winkler, W. E. 1999. The state of record linkage and current research problems. In Survey Methods Section, pages 73ï¿½79.
+Witte, R., R. Krestel, and S. Bergler. 2007. Generating Update Summaries for DUC 2007. In Document Understanding Conference (DUC).
 Ye, S., L. Qiu, T.S. Chua, and M.Y. Kan. 2005. NUS at DUC 2005: Understanding documents via concept links. In Document Understanding Conference (DUC).
-
-Carbonell, J. and J. Goldstein. 1998. The use of MMR, diversity-based reranking for reordering documents and producing summaries. In 21st annual international ACM SIGIR conference on Research and development in information retrieval, pages 335­336. ACM Press New York, NY, USA.
 
 26
 
