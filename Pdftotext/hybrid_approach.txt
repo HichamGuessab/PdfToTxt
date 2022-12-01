@@ -91,7 +91,7 @@ NP
 
 = 0.54
 
-XÂ¡
+X¡
 
 0.27 0.05
 
@@ -105,26 +105,26 @@ gische
 
 N = 0.65 X 0.26 bank
 
-For every combination the probability estimate is calculated. So if we generate all possible compressions (including no compression), the phrase de grootste Belgische bank will get the probability estimate Â¤Â¢ Â¦Â£ Â¨Â¥ Â§ Â©  Â¤Â¢ Â£Â©Â¢ !Â£ "Â¥ #Â© Â¢ Â£!Â¥"Â© Â¢Â¤Â£$&Â¥ %()' Â¤Â¢ Â£$Â¢ 012Â§ $ Â¥ . For the phrase de Belgische bank the probability estimate is Â¢ Â£Â¦Â¢ 3Â¥ Â©) Â¢Â¤Â£ 4 Â© Â¢Â¤Â£5$6Â¥ Â©#Â¤Â¢ Â£Â¦Â¥&6 Â©#Â¢Â¤Â¦Â£  Â¥ 7% '8Â¢ Â¦Â£ &Â¢ "Â¢ 2Â§ 5&5 , and so on for the other alternatives.
+For every combination the probability estimate is calculated. So if we generate all possible compressions (including no compression), the phrase de grootste Belgische bank will get the probability estimate ¤¢ ¦£ ¨¥ § ©  ¤¢ £©¢ !£ "¥ #© ¢ £!¥"© ¢¤£$&¥ %()' ¤¢ £$¢ 012§ $ ¥ . For the phrase de Belgische bank the probability estimate is ¢ £¦¢ 3¥ ©) ¢¤£ 4 © ¢¤£5$6¥ ©#¤¢ £¦¥&6 ©#¢¤¦£  ¥ 7% '8¢ ¦£ &¢ "¢ 2§ 5&5 , and so on for the other alternatives.
 In this way, the probability estimate of all possible alternatives is calculated.
 2.2.2 Use of Rules
 As the statistical information allows the generation of ungrammatical sentences, a number of rules were added to avoid generating such sentences. The procedure keeps the necessary tokens for each kind of node. The rules were built in a bootstrapping manner
 In some of these rules, this procedure is applied recursively. These are the rules implemented in our system:
 9 If a node is of type SSUB or RELP, keep the first word.
 9 If a node is of type S, SSUB or RELP, keep
-Â­ the verbs. If there are prepositions which are particles of the verb, keep the prepositions. If there is a prepositional phrase which has a preposition which is in the complements list of the verb, keep the necessary tokens3 of that prepositional phrase.
+­ the verbs. If there are prepositions which are particles of the verb, keep the prepositions. If there is a prepositional phrase which has a preposition which is in the complements list of the verb, keep the necessary tokens3 of that prepositional phrase.
 2These measures are estimated probabilities and do not need to add up to 1, because in the parallel training corpus, sometimes a match was detected with a chunk which was not a reduction of the source chunk or which was not identical to the source chunk: the chunk could be paraphrased, or even have become longer.
 3Recursive use of the rules
 
-Â­ each token which is in the list of negative words. These words are kept to avoid altering the meaning of the sentence by dropping words which negate the meaning.
-Â­ the necessary tokens of the te + infinitives (TI).
-Â­ the conjunctions. Â­ the necessary tokens of each NP. Â­ the numerals. Â­ the adverbially used adjectives. 9 If a node is of type NP, keep
-Â­ each noun. Â­ each nominalised adjectival phrase. Â­ each token which is in the list of negative
-words. Â­ the determiners. Â­ the numerals. Â­ the indefinite prenominal pronouns. 9 If a node is of type PP, keep
-Â­ the preposition. Â­ the determiners. Â­ the necessary tokens of the NPs. 9 If the node is of type adjectival phrase, keep
-Â­ the head of the adjectival phrase. Â­ the prenominal numerals. Â­ each word which is in the list of negative
+­ each token which is in the list of negative words. These words are kept to avoid altering the meaning of the sentence by dropping words which negate the meaning.
+­ the necessary tokens of the te + infinitives (TI).
+­ the conjunctions. ­ the necessary tokens of each NP. ­ the numerals. ­ the adverbially used adjectives. 9 If a node is of type NP, keep
+­ each noun. ­ each nominalised adjectival phrase. ­ each token which is in the list of negative
+words. ­ the determiners. ­ the numerals. ­ the indefinite prenominal pronouns. 9 If a node is of type PP, keep
+­ the preposition. ­ the determiners. ­ the necessary tokens of the NPs. 9 If the node is of type adjectival phrase, keep
+­ the head of the adjectival phrase. ­ the prenominal numerals. ­ each word which is in the list of negative
 words. 9 If the node is of type OTI, keep
-Â­ the verbs. Â­ the te + infinitives. 9 If the node is of type TI, keep the node. 9 If the node is a time phrase4, keep it.
+­ the verbs. ­ the te + infinitives. 9 If the node is of type TI, keep the node. 9 If the node is a time phrase4, keep it.
 These rules are chosen because in tests on earlier versions of the system, using a different test set, ungrammatical output was generated. By using these rules the output should be grammatical, provided that the input sentence was analysed correctly.
 4A time phrase, as defined in ShaRPa is used for special phrases, like dates, times, etc. E.g. 27 september 1998, kwart voor drie [E: quarter to three].
 
@@ -174,7 +174,7 @@ We created a testset of 100 sentences mainly focused on news broadcasts in which
 We created a testset of 300 sentences, of which 200 were taken from transcripts of television news, and 100 were taken from the 'broadcast news' component of CGN.
 To evaluate the compressor, we estimate the duration of each sentence, by counting the number of syllables and multiplying that number with the ASD for that condition. This leads to an estimated pronunciation time. This is converted to the number of characters, which is available for the subtitle.
 We know the average time for subtitle presentation at the VRT (Flemish Broadcasting Coorporation) is 70 characters in 6 seconds, which gives us an average of 11.67 characters per second.
-So, for example, if we have a test sentence of 15 syllables, this gives us an estimated pronunciation time of 2.775 seconds (15 syllables Â© 185 ms/syllable) in condition A. When converting this to the available characters, we multiply 2.775 seconds by 11.67 characters/second, resulting in 32 (2.775s Â© 11.67 ch/s = 32.4 ch) available characters.
+So, for example, if we have a test sentence of 15 syllables, this gives us an estimated pronunciation time of 2.775 seconds (15 syllables © 185 ms/syllable) in condition A. When converting this to the available characters, we multiply 2.775 seconds by 11.67 characters/second, resulting in 32 (2.775s © 11.67 ch/s = 32.4 ch) available characters.
 In condition B (considered to be real-time) for the part of the test-sentences coming from CGN, the pronunciation time was not estimated, as it was available in CGN.
 
 3.2 Results
@@ -254,7 +254,7 @@ J.P. Marters, M. Moortgat, and H. Baayen. 2002.
 
 Experiences from the Spoken Dutch Corpus. In
 
-Proceedings of LREC 2002, volume I, pages 340Â­
+Proceedings of LREC 2002, volume I, pages 340­
 
 347, Paris. ELRA.
 
@@ -282,7 +282,7 @@ Maximizing lexical coverage in speech recogni-
 
 tion through automated compounding. In Pro-
 
-ceedings of LREC 2002, volume IV, pages 1270Â­
+ceedings of LREC 2002, volume IV, pages 1270­
 
 1276, Paris. ELRA.
 

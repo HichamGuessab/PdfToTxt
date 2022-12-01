@@ -64,11 +64,11 @@ Let t and s be syntax trees of the original sentence and a reduced sentence, res
 An Input list consists of a sequence of words subsumed by the tree t where each word in the Input list is labelled with the name of all syntactic constituents in t. Let CSTACK be a stack
 
 that consists of sub trees in order to rewrite a small tree. Let RSTACK be a stack that consists of sub trees which are removed from the Input list in the rewriting process.
-Â· SHIFT action transfers the first word from the Input list into CSTACK. It is written mathematically and given the label SHIFT.
-Â· REDUCE(lk, X) action pops the lk syntactic trees located at the top of CSTACK and combines them in a new tree, where lk is an integer and X is a grammar symbol.
-Â· DROP X action moves subsequences of words that correspond to syntactic constituents from the Input list to RSTACK.
-Â· ASSIGN TYPE X action changes the label of trees at the top of the CSTACK. These POS tags might be different from the POS tags in the original sentence.
-Â· RESTORE X action takes the X element in RSTACK and moves it into the Input list, where X is a subtree.
+· SHIFT action transfers the first word from the Input list into CSTACK. It is written mathematically and given the label SHIFT.
+· REDUCE(lk, X) action pops the lk syntactic trees located at the top of CSTACK and combines them in a new tree, where lk is an integer and X is a grammar symbol.
+· DROP X action moves subsequences of words that correspond to syntactic constituents from the Input list to RSTACK.
+· ASSIGN TYPE X action changes the label of trees at the top of the CSTACK. These POS tags might be different from the POS tags in the original sentence.
+· RESTORE X action takes the X element in RSTACK and moves it into the Input list, where X is a subtree.
 For convenience, let configuration be a status of Input list, CSTACK and RSTACK. Let current context be the important information in a configuration. The important information are defined as a vector of features using heuristic methods as in (Knight and Marcu 02), (Nguyen and Horiguchi 03).
 The main idea behind deterministic sentence reduction is that it uses a rule in the current context of the initial configuration to select a distinct action in order to rewrite an input sentence into a reduced sentence. After that, the current context is changed to a new context and the rewriting process is repeated for selecting an action that corresponds to the new context. The rewriting process is finished when it meets a termination condition. Here, one rule corresponds to the function that maps the current context to a rewriting action. These rules are learned automatically from the corpus of long sentences and their reduced sentences (Knight and Marcu 02), (Nguyen and Horiguchi 03).
 3.2 Example
@@ -88,9 +88,9 @@ One important task in applying SVMs to text summarization is to define features.
 The features are extracted based on the current context. As it can be seen in Figure 2, a context includes the status of the Input list and the status of CSTACK and RSTACK. We define a set of features for a current context as described bellow. Operation feature The set of features as described in (Nguyen and Horiguchi 03) are used in our sentence reduction models. Original tree features These features denote the syntactic constituents
 
 that start with the first unit in the Input list. For example, in Figure 2 the syntactic constituents are labels of the current element in the Input list from "VP" to the verb "convince". Semantic features The following features are used in our model as semantic information.
-Â· Semantic information about current words within the Input list; these semantic types are obtained by using the named entities such as Location, Person, Organization and Time within the input sentence. To define these name entities, we use the method described in (Borthwick 99).
-Â· Semantic information about whether or not the word in the Input list is a head word.
-Â· Word relations, such as whether or not a word has a relationship with other words in the subcategorization table. These relations and the sub-categorization table are obtained using the Commlex database (Macleod 95).
+· Semantic information about current words within the Input list; these semantic types are obtained by using the named entities such as Location, Person, Organization and Time within the input sentence. To define these name entities, we use the method described in (Borthwick 99).
+· Semantic information about whether or not the word in the Input list is a head word.
+· Word relations, such as whether or not a word has a relationship with other words in the subcategorization table. These relations and the sub-categorization table are obtained using the Commlex database (Macleod 95).
 Using the semantic information, we are able to avoid deleting important segments within the given input sentence. For instance, the main verb, the subject and the object are essential and for the noun phrase, the head noun is essential, but an adjective modifier of the head noun is not. For example, let us consider that the verb "convince" was extracted from the Comlex database as follows.
 convince NP-PP: PVAL ("of") NP-TO-INF-OC This entry indicates that the verb "convince"
 
@@ -226,7 +226,7 @@ i=1
 
 where i = 1, 2, ...k and pi > 0. Such a point can be obtained by using an algorithm described elsewhere in (Hastie 98). We applied it to obtain a probabilistic SVM model for sentence reduction using a simple method as follows. Assume that our class labels belong to l groups: M = {m1, m2...mi, ..., ml} , where l is a number of groups and mi is a group e.g., SHIFT, REDUCE ,..., ASSIGN TYPE. Then the probability p(a|c) of an action a for a given context c can be estimated as follows.
 
-p(a|c) = p(mi|c) Ã— p(a|c, mi)
+p(a|c) = p(mi|c) × p(a|c, mi)
 
 (5)
 
@@ -333,15 +333,15 @@ Method Comp Gramma
 
 Impo
 
-Baseline1 57.19% 8.60 Â± 2.8 7.18 Â± 1.92
+Baseline1 57.19% 8.60 ± 2.8 7.18 ± 1.92
 
-Baseline2 57.15% 8.60 Â± 2.1 7.42 Â± 1.90
+Baseline2 57.15% 8.60 ± 2.1 7.42 ± 1.90
 
-SVM-D 57.65% 8.76 Â± 1.2 7.53 Â± 1.53
+SVM-D 57.65% 8.76 ± 1.2 7.53 ± 1.53
 
-SVMP-10 57.51% 8.80 Â± 1.3 7.74 Â± 1.39
+SVMP-10 57.51% 8.80 ± 1.3 7.74 ± 1.39
 
-Human 64.00% 9.05 Â± 0.3 8.50 Â± 0.80
+Human 64.00% 9.05 ± 0.3 8.50 ± 0.80
 
 divided into SHIFT, REDUCE, DROP, RESTORE, and ASSIGN groups. To train our support vector model in each group, we used the pairwise method with the polynomial kernel function, in which the parameter p in (3) and the constant C0 in equation (1) are 2 and 0.0001, respectively.
 The algorithms (Knight and Marcu 02) and (Nguyen and Horiguchi 03) served as the baseline1 and the baseline2 for comparison with the proposed algorithms. Deterministic sentence reduction using SVM and probabilistic sentence reduction were named as SVM-D and SVMP, respectively. For convenience, the ten top reduced outputs using SVMP were called SVMP-10. We used the same evaluation method as described in (Knight and Marcu 02) to compare the proposed methods with previous methods. For this experiment, we presented each original sentence in the test corpus to three judges who are specialists in English, together with three sentence reductions: the human generated reduction sentence, the outputs of the proposed algorithms, and the output of the baseline algorithms.
@@ -384,17 +384,17 @@ Method Comp Gramma
 
 Impo
 
-Baseline1 54.14% 7.61 Â± 2.10 6.74 Â± 1.92
+Baseline1 54.14% 7.61 ± 2.10 6.74 ± 1.92
 
-Baseline2 53.13% 7.72 Â± 1.60 7.02 Â± 1.90
+Baseline2 53.13% 7.72 ± 1.60 7.02 ± 1.90
 
-SVM-D 56.64% 7.86 Â± 1.20 7.23 Â± 1.53
+SVM-D 56.64% 7.86 ± 1.20 7.23 ± 1.53
 
-SVMP-R 58.31% 8.25 Â± 1.30 7.54 Â± 1.39
+SVMP-R 58.31% 8.25 ± 1.30 7.54 ± 1.39
 
-SVMP-10 57.62% 8.60 Â± 1.32 7.71 Â± 1.41
+SVMP-10 57.62% 8.60 ± 1.32 7.71 ± 1.41
 
-Human 64.00% 9.01 Â± 0.25 8.40 Â± 0.60
+Human 64.00% 9.01 ± 0.25 8.40 ± 0.60
 
 6 Conclusions
 We have presented a new probabilistic sentence reduction approach that enables a long sentence to be rewritten into reduced sentences based on support vector models. Our methods achieves better performance when compared with earlier methods. The proposed reduction approach can generate multiple best outputs. Experimental results showed that the top 10 reduced sentences returned by the reduction process might yield accuracies higher than previous work. We believe that a good ranking method might improve the sentence reduction performance further in a text.

@@ -41,7 +41,7 @@ While most compression models have been developed with written text in mind, Hor
 2.2 Integer Linear Programming in NLP
 ILPs are constrained optimization problems where both the objective function and the constraints are linear equations with integer variables (see Section 3.1 for more details). ILP techniques have been recently applied to several NLP tasks, including relation extraction (Roth & Yih, 2004), semantic role labeling (Punyakanok et al., 2004), the generation of route directions (Marciniak & Strube, 2005), temporal link analysis (Bramsen, Deshpande, Lee, & Barzilay, 2006), set partitioning (Barzilay & Lapata, 2006), syntactic parsing (Riedel & Clarke, 2006), and coreference resolution (Denis & Baldridge, 2007).
 Most of these approaches combine a local classifier with an inference procedure based on ILP. The classifier proposes possible answers which are assessed in the presence of global constraints. ILP is used to make a final decision that is consistent with the constraints and likely according to the classifier. For example, the semantic role labeling task involves identifying the verb-argument structure for a given sentence. Punyakanok et al. (2004) first use SNOW, a multi-class classifier2 (Roth, 1998), to identify and label candidate arguments. They observe that the labels assigned to arguments in a sentence often contradict each other. To resolve these conflicts they propose global constraints (e.g., each argument should be instantiated once for a given verb, every verb should have at least one argument) and use ILP to reclassify the output of SNOW.
-Dras (1999) develops a document paraphrasing model using ILP. The key premise of his work is that in some cases one may want to rewrite a document so as to conform to some global constraints such as length, readability, or style. The proposed model has three ingredients: a set of sentence-level paraphrases for rewriting the text, a set of global constraints, and an objective function which quantifies the effect incurred by the paraphrases. Under this formulation, ILP can be used to select which paraphrases to apply so that the global constraints are satisfied. Paraphrase generation falls outside the scope of the ILP model Â­ sentence rewrite operations are mainly syntactic and provided by a module based on synchronous tree adjoining grammar (S-TAG, Shieber & Schabes, 1990). Unfortunately, only a proof-of-concept is presented; implementation and evaluation of this module are left to future work.
+Dras (1999) develops a document paraphrasing model using ILP. The key premise of his work is that in some cases one may want to rewrite a document so as to conform to some global constraints such as length, readability, or style. The proposed model has three ingredients: a set of sentence-level paraphrases for rewriting the text, a set of global constraints, and an objective function which quantifies the effect incurred by the paraphrases. Under this formulation, ILP can be used to select which paraphrases to apply so that the global constraints are satisfied. Paraphrase generation falls outside the scope of the ILP model ­ sentence rewrite operations are mainly syntactic and provided by a module based on synchronous tree adjoining grammar (S-TAG, Shieber & Schabes, 1990). Unfortunately, only a proof-of-concept is presented; implementation and evaluation of this module are left to future work.
 2. SNOW's learning algorithm is a variation of the Winnow update rule.
 402
 
@@ -58,9 +58,9 @@ In this section we present the details of the proposed framework for sentence co
 We first give a brief introduction into integer linear programming, an extension of linear programming for readers unfamiliar with mathematical programming. Our compression models are next described in Section 3.4 and constraints in Section 3.5.
 3.1 Linear Programming
 Linear programming (LP) problems are optimization problems with constraints. They consist of three parts:
-Â· Decision variables. These are variables under our control which we wish to assign optimal values to.
-Â· A linear function (the objective function). This is the function we wish to minimize or maximize. This function is influences by the values assigned to the decision variables.
-Â· Constraints. Most problems will only allow the decision variables to take certain values. These restrictions are the constraints.
+· Decision variables. These are variables under our control which we wish to assign optimal values to.
+· A linear function (the objective function). This is the function we wish to minimize or maximize. This function is influences by the values assigned to the decision variables.
+· Constraints. Most problems will only allow the decision variables to take certain values. These restrictions are the constraints.
 These terms are best demonstrated with a simple example taken from Winston and Venkataramanan (2003). Imagine a manufacturer of tables and chairs which we shall call the Telfa Corporation. To produce a table, 1 hour of labor and 9 square board feet of wood is required. Chairs require 1 hour of labor and 5 square board feet of wood. Telfa have 6 hours of labor and 45 square board feet of wood available. The profit made from each table is 8 GBP and 5 GBP for chairs. We wish to determine the number of tables and chairs that should be manufactured to maximize Telfa's profit.
 First, we must determine the decision variables. In our case we define:
 x1 = number of tables manufactured x2 = number of chairs manufactured
@@ -339,7 +339,7 @@ If we were using a unigram language model, our objective function would maximize
 
 n
 
-max i Â· P (xi)
+max i · P (xi)
 
 (1)
 
@@ -407,14 +407,14 @@ k  [j + 1 . . . n]
 Our objective function is given in Equation (2). This is the sum of all possible trigrams that can occur in all compressions of the source sentence where x0 represents the `start' token and xi is the ith word in sentence x. Equation (3) constrains the decision variables to be binary.
 
 n
-max z = i Â· P (xi|start)
+max z = i · P (xi|start)
 i=1
 
 n-2 n-1 n
 
 +
 
-ijk Â· P (xk|xi, xj )
+ijk · P (xk|xi, xj )
 
 i=1 j=i+1 k=j+1
 
@@ -422,7 +422,7 @@ n-1 n
 
 +
 
-ij Â· P (end|xi, xj)
+ij · P (end|xi, xj)
 
 (2)
 
@@ -542,7 +542,7 @@ I (xi )
 
 l N
 
-Â·
+·
 
 fi log
 
@@ -637,7 +637,7 @@ n
 
 max z =
 
-i Â· I(xi) + i Â· P (xi|start)
+i · I(xi) + i · P (xi|start)
 
 i=1
 
@@ -647,7 +647,7 @@ n-2 n-1 n
 
 +
 
-ijk Â· P (xk|xi, xj )
+ijk · P (xk|xi, xj )
 
 i=1 j=i+1 k=j+1
 
@@ -655,13 +655,13 @@ n-1 n
 
 +
 
-ij Â· P (end|xi, xj)
+ij · P (end|xi, xj)
 
 i=0 j=i+1
 
 (11)
 
-We also add a weighting factor () to the objective, in order to counterbalance the importance of the language model and the significance score. The weight is tuned on a small parallel corpus. The sequential constraints from Equations (4)Â­(8) are again used to ensure that the trigrams are combined in a valid way.
+We also add a weighting factor () to the objective, in order to counterbalance the importance of the language model and the significance score. The weight is tuned on a small parallel corpus. The sequential constraints from Equations (4)­(8) are again used to ensure that the trigrams are combined in a valid way.
 
 3.4.3 Discriminative Model
 As a fully supervised model, we used the discriminative model presented by McDonald (2006). This model uses a large-margin learning framework coupled with a feature set defined on compression bigrams and syntactic structure.
@@ -695,7 +695,7 @@ representation and a corresponding weight vector:
 
 |y|
 
-s(x, y) = w Â· f (x, L(yj-1), L(yj))
+s(x, y) = w · f (x, L(yj-1), L(yj))
 
 (14)
 
@@ -760,7 +760,7 @@ The discriminative model can be now expressed as:
 
 n
 
-max z = i Â· s(x, 0, i)
+max z = i · s(x, 0, i)
 
 i=1
 
@@ -768,13 +768,13 @@ n-1 n
 
 +
 
-ij Â· s(x, i, j)
+ij · s(x, i, j)
 
 i=1 j=i+1
 
 n
 
-+ i Â· s(x, i, n + 1)
++ i · s(x, i, n + 1)
 
 (15)
 
@@ -830,7 +830,7 @@ i = 1
 
 i=1
 
-Again, the sequential constraints in Equations (16)Â­(19) are necessary to ensure that the resulting combination of bigrams are valid.
+Again, the sequential constraints in Equations (16)­(19) are necessary to ensure that the resulting combination of bigrams are valid.
 The current formulation provides a single optimal compression given the model. However, McDonald's (2006) dynamic programming algorithm is capable of returning the k-best compressions; this is useful for their learning algorithm described later. In order to produce k-best compressions, we must rerun the ILP with extra constraints which forbid previous solutions. In other words, we first formulate the ILP as above, solve it, add its solution to the k-best list, and then create a set of constraints that forbid the configuration of i decision variables which form the current solution. The procedure is repeated until k compressions are found.
 The computation of the compression score crucially relies on the dot product between a high dimensional feature representation and a corresponding weight vector (see Equation (14)). McDonald (2006) employs a rich feature set defined over adjacent words and individual parts-of-speech, dropped words and phrases from the source sentence, and dependency structures (also of the source sentence). These features are designed to mimic the information presented in the previous noisy-channel and decision-tree models of Knight and Marcu (2002). Features over adjacent words are used as a proxy to the language model of the noisy channel. Unlike other models, which treat the parses as gold standard, McDonald uses the dependency information as another form of evidence. Faced with parses that are noisy the learning algorithm can reduce the weighting given to those features if they prove
 
@@ -962,7 +962,7 @@ i : xi  personal pronouns
 417
 
 Clarke & Lapata
-We should note that some of the constraints described above would be captured by models that learn synchronous deletion rules from a corpus. For example, the noisy-channel model of Knight and Marcu (2002) learns not to drop the head when the latter is modified by an adjective or a noun, since the transformations DT NN  DT or AJD NN  ADJ are almost never seen in the data. Similarly, the coordination constraint (Equations (28)Â­(30)) would be enforced using Turner and Charniak's (2005) special rules -- they enhance their parallel grammar with rules modeling more structurally complicated deletions than those attested in their corpus. In designing our constraints we aimed at capturing appropriate deletions for many possible models, including those that do not rely on a training corpus or do not have an explicit notion of a parallel grammar (e.g., McDonald, 2006). The modification constraints would presumably be redundant for the noisy-channel model, which could otherwise benefit from more specialized constraints, e.g., targeting sparse rules or noisy parse trees, however we leave this to future work.
+We should note that some of the constraints described above would be captured by models that learn synchronous deletion rules from a corpus. For example, the noisy-channel model of Knight and Marcu (2002) learns not to drop the head when the latter is modified by an adjective or a noun, since the transformations DT NN  DT or AJD NN  ADJ are almost never seen in the data. Similarly, the coordination constraint (Equations (28)­(30)) would be enforced using Turner and Charniak's (2005) special rules -- they enhance their parallel grammar with rules modeling more structurally complicated deletions than those attested in their corpus. In designing our constraints we aimed at capturing appropriate deletions for many possible models, including those that do not rely on a training corpus or do not have an explicit notion of a parallel grammar (e.g., McDonald, 2006). The modification constraints would presumably be redundant for the noisy-channel model, which could otherwise benefit from more specialized constraints, e.g., targeting sparse rules or noisy parse trees, however we leave this to future work.
 Another feature of the modeling framework presented here is that deletions (or nondeletions) are treated as unconditional decisions. For example, we require not to drop the noun in adjective-noun sequences if the adjective is not deleted as well. We also require to always include a verb in the compression if the source sentence has one. These hardwired decisions could in some cases prevent valid compressions from being considered. For instance, it is not possible to compress the sentence "this is not appropriate behavior" to "this is not appropriate" or"Bob loves Mary and John loves Susan" to "Bob loves Mary and John Susan". Admittedly we lose some expressive power, yet we ensure that the compressions will be broadly grammatically, even for unsupervised or semi-supervised models. Furthermore, in practice we find that our models consistently outperform non-constraint-based alternatives, without extensive constraint engineering.
 3.6 Solving the ILP
 As we mentioned earlier (Section 3.1), solving ILPs is NP-hard. In cases where the coefficient matrix is unimodular, it can be shown that the optimal solution to the linear program is integral. Although the coefficient matrix in our problems is not unimodular, we obtained integral solutions for all sentences we experimented with (approximately 3,000, see Section 4.1 for details). We conjecture that this is due to the fact that all of our variables have 0, +1 or -1 coefficients in the constraints and therefore our constraint matrix shares many properties of a unimodular matrix. We generate and solve an ILP for every sentence we wish to compress. Solve times are less than a second per sentence (including input-output overheads) for all models presented here.
@@ -993,7 +993,7 @@ We evaluate the output of our models in two ways. First, we present results usin
 Global Inference for Sentence Compression
 in Clarke and Lapata (2006) we show that relations-based F-score correlates reliably with human judgments on compression output. Since our test corpora are larger than ZiffDavis (by more than a factor of ten), differences among systems can be highlighted using significance testing.
 Our implementation of the F-score measure used the grammatical relations annotations provided by RASP (Briscoe & Carroll, 2002). This parser is particularly appropriate for the compression task since it provides parses for both full sentences and sentence fragments and is generally robust enough to analyze semi-grammatical sentences. We calculated F-score over all the relations provided by RASP (e.g., subject, direct/indirect object, modifier; 15 in total).
-In line with previous work we also evaluate our models by eliciting human judgments. Following the work of Knight and Marcu (2002), we conducted two separate experiments. In the first experiment participants were presented with a source sentence and its target compression and asked to rate how well the compression preserved the most important information from the source sentence. In the second experiment, they were asked to rate the grammaticality of the compressed outputs. In both cases they used a five point rating scale where a high number indicates better performance. We randomly selected 21 sentences from the test portion of each corpus. These sentences were compressed automatically by the three models presented in this paper with and without constraints. We also included gold standard compressions. Our materials thus consisted of 294 (21 Ã— 2 Ã— 7) sourcetarget sentences. A Latin square design ensured that subjects did not see two different compressions of the same sentence. We collected ratings from 42 unpaid volunteers, all self reported native English speakers. Both studies were conducted over the Internet using a custom build web interface. Examples of our experimental items are given in Table 3.
+In line with previous work we also evaluate our models by eliciting human judgments. Following the work of Knight and Marcu (2002), we conducted two separate experiments. In the first experiment participants were presented with a source sentence and its target compression and asked to rate how well the compression preserved the most important information from the source sentence. In the second experiment, they were asked to rate the grammaticality of the compressed outputs. In both cases they used a five point rating scale where a high number indicates better performance. We randomly selected 21 sentences from the test portion of each corpus. These sentences were compressed automatically by the three models presented in this paper with and without constraints. We also included gold standard compressions. Our materials thus consisted of 294 (21 × 2 × 7) sourcetarget sentences. A Latin square design ensured that subjects did not see two different compressions of the same sentence. We collected ratings from 42 unpaid volunteers, all self reported native English speakers. Both studies were conducted over the Internet using a custom build web interface. Examples of our experimental items are given in Table 3.
 5. Results
 Let us first discuss our results when compression output is evaluated in terms of F-score. Tables 4 and 5 illustrate the performance of our models on the written and spoken corpora, respectively. We also present the compression rate7 for each system. In all cases the constraint-based models (+Constr) yield better F-scores than the non-constrained ones. The difference is starker for the semi-supervised model (Sig). The constraints bring an improvement of 17.2% on the written corpus and 18.3% on the spoken corpus. We further examined whether performance differences among models are statistically significant, using the Wilcoxon test. On the written corpus all constraint models significantly outperform the models without constraints. The same tendency is observed on the spoken corpus except for the model of McDonald (2006) which performs comparably with and without constraints.
 We also wanted to establish which is the best constraint model. On both corpora we find that the language model performs worst, whereas the significance model and McDonald perform comparably (i.e., the F-score differences are not statistically significant). To get a feeling for the difficulty of the task, we calculated how much our annotators agreed in their compression output. The inter-annotator agreement (F-score) on the written corpus was 65.8% and on the spoken corpus 73.4%. The agreement is higher on spoken texts since they consists of many short utterances (e.g., Okay, That's it for now, Good night) that can
@@ -1214,59 +1214,59 @@ Beyond the task and systems presented in this paper, we believe the approach hol
 Acknowledgments
 We are grateful to our annotators Vasilis Karaiskos, Beata Kouchnir, and Sarah Luger. Thanks to Jean Carletta, Frank Keller, Steve Renals, and Sebastian Riedel for helpful comments and suggestions and to the anonymous referees whose feedback helped to substantially improve the present paper. Lapata acknowledges the support of EPSRC (grant GR/T04540/01). A preliminary version of this work was published in the proceedings of ACL 2006.
 References
-Aho, A. V., & Ullman, J. D. (1969). Syntax directed translations and the pushdown assembler. Journal of Computer and System Sciences, 3, 37Â­56.
-Bangalore, S., Rambow, O., & Whittaker, S. (2000). Evaluation metrics for generation. In Proceedings of the first International Conference on Natural Language Generation, pp. 1Â­8, Mitzpe Ramon, Israel.
-Barzilay, R., & Lapata, M. (2006). Aggregation via set partitioning for natural language generation. In Proceedings of the Human Language Technology Conference of the North American Chapter of the Association for Computational Linguistics, pp. 359Â­ 366, New York, NY, USA.
-Bramsen, P., Deshpande, P., Lee, Y. K., & Barzilay, R. (2006). Inducing temporal graphs. In Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing, pp. 189Â­198, Sydney, Australia.
-Briscoe, E. J., & Carroll, J. (2002). Robust accurate statistical annotation of general text. In Proceedings of the Third International Conference on Language Resources and Evaluation, pp. 1499Â­1504, Las Palmas, Gran Canaria.
-Charniak, E. (2000). A maximum-entropy-inspired parser. In Proceedings of the 1st North American Annual Meeting of the Association for Computational Linguistics, pp. 132Â­ 139, Seattle, WA, USA.
-Clarke, J., & Lapata, M. (2006). Models for sentence compression: A comparison across domains, training requirements and evaluation measures. In Proceedings of the 21st International Conference on Computational Linguistics and 44th Annual Meeting of the Association for Computational Linguistics, pp. 377Â­384, Sydney, Australia.
-Clarkson, P., & Rosenfeld, R. (1997). Statistical language modeling using the CMUÂ­ Cambridge toolkit. In Proceedings of Eurospeech'97, pp. 2707Â­2710, Rhodes, Greece.
+Aho, A. V., & Ullman, J. D. (1969). Syntax directed translations and the pushdown assembler. Journal of Computer and System Sciences, 3, 37­56.
+Bangalore, S., Rambow, O., & Whittaker, S. (2000). Evaluation metrics for generation. In Proceedings of the first International Conference on Natural Language Generation, pp. 1­8, Mitzpe Ramon, Israel.
+Barzilay, R., & Lapata, M. (2006). Aggregation via set partitioning for natural language generation. In Proceedings of the Human Language Technology Conference of the North American Chapter of the Association for Computational Linguistics, pp. 359­ 366, New York, NY, USA.
+Bramsen, P., Deshpande, P., Lee, Y. K., & Barzilay, R. (2006). Inducing temporal graphs. In Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing, pp. 189­198, Sydney, Australia.
+Briscoe, E. J., & Carroll, J. (2002). Robust accurate statistical annotation of general text. In Proceedings of the Third International Conference on Language Resources and Evaluation, pp. 1499­1504, Las Palmas, Gran Canaria.
+Charniak, E. (2000). A maximum-entropy-inspired parser. In Proceedings of the 1st North American Annual Meeting of the Association for Computational Linguistics, pp. 132­ 139, Seattle, WA, USA.
+Clarke, J., & Lapata, M. (2006). Models for sentence compression: A comparison across domains, training requirements and evaluation measures. In Proceedings of the 21st International Conference on Computational Linguistics and 44th Annual Meeting of the Association for Computational Linguistics, pp. 377­384, Sydney, Australia.
+Clarkson, P., & Rosenfeld, R. (1997). Statistical language modeling using the CMU­ Cambridge toolkit. In Proceedings of Eurospeech'97, pp. 2707­2710, Rhodes, Greece.
 426
 
 Global Inference for Sentence Compression
 Cormen, T. H., Leiserson, C. E., & Rivest, R. L. (1992). Intoduction to Algorithms. The MIT Press.
-Corston-Oliver, S. (2001). Text Compaction for Display on Very Small Screens. In Proceedings of the Workshop on Automatic Summarization at the 2nd Meeting of the North American Chapter of the Association for Computational Linguistics, pp. 89Â­98, Pittsburgh, PA, USA.
-Crammer, K., & Singer, Y. (2003). Ultraconservative online algorithms for multiclass problems. Journal of Machine Learning Research, 3, 951Â­991.
+Corston-Oliver, S. (2001). Text Compaction for Display on Very Small Screens. In Proceedings of the Workshop on Automatic Summarization at the 2nd Meeting of the North American Chapter of the Association for Computational Linguistics, pp. 89­98, Pittsburgh, PA, USA.
+Crammer, K., & Singer, Y. (2003). Ultraconservative online algorithms for multiclass problems. Journal of Machine Learning Research, 3, 951­991.
 Dantzig, G. B. (1963). Linear Programming and Extensions. Princeton University Press, Princeton, NJ, USA.
-Denis, P., & Baldridge, J. (2007). Joint determination of anaphoricity and coreference resolution using integer programming. In Human Language Technologies 2007: The Conference of the North American Chapter of the Association for Computational Linguistics; Proceedings of the Main Conference, pp. 236Â­243, Rochester, NY.
+Denis, P., & Baldridge, J. (2007). Joint determination of anaphoricity and coreference resolution using integer programming. In Human Language Technologies 2007: The Conference of the North American Chapter of the Association for Computational Linguistics; Proceedings of the Main Conference, pp. 236­243, Rochester, NY.
 Dras, M. (1999). Tree Adjoining Grammar and the Reluctant Paraphrasing of Text. Ph.D. thesis, Macquarie University.
-Galley, M., & McKeown, K. (2007). Lexicalized markov grammars for sentence compression. In In Proceedings of the North American Chapter of the Association for Computational Linguistics, pp. 180Â­187, Rochester, NY, USA.
+Galley, M., & McKeown, K. (2007). Lexicalized markov grammars for sentence compression. In In Proceedings of the North American Chapter of the Association for Computational Linguistics, pp. 180­187, Rochester, NY, USA.
 Gomory, R. E. (1960). Solving linear programming problems in integers. In Bellman, R., & Hall, M. (Eds.), Combinatorial analysis, Proceedings of Symposia in Applied Mathematics, Vol. 10, Providence, RI, USA.
-Grefenstette, G. (1998). Producing Intelligent Telegraphic Text Reduction to Provide an Audio Scanning Service for the Blind. In Hovy, E., & Radev, D. R. (Eds.), Proceedings of the AAAI Symposium on Intelligent Text Summarization, pp. 111Â­117, Stanford, CA, USA.
-Hori, C., & Furui, S. (2004). Speech summarization: an approach through word extraction and a method for evaluation. IEICE Transactions on Information and Systems, E87D (1), 15Â­25.
-Jing, H. (2000). Sentence reduction for automatic text summarization. In Proceedings of the 6th Applied Natural Language Processing Conference, pp. 310Â­315, Seattle,WA, USA.
-Knight, K., & Marcu, D. (2002). Summarization beyond sentence extraction: a probabilistic approach to sentence compression. Artificial Intelligence, 139 (1), 91Â­107.
-Land, A. H., & Doig, A. G. (1960). An automatic method for solving discrete programming problems. Econometrica, 28, 497Â­520.
-Lin, C.-Y. (2003). Improving summarization performance by sentence compression -- a pilot study. In Proceedings of the 6th International Workshop on Information Retrieval with Asian Languages, pp. 1Â­8, Sapporo, Japan.
-Lin, D. (2001). LaTaT: Language and text analysis tools. In Proceedings of the first Human Language Technology Conference, pp. 222Â­227, San Francisco, CA, USA.
+Grefenstette, G. (1998). Producing Intelligent Telegraphic Text Reduction to Provide an Audio Scanning Service for the Blind. In Hovy, E., & Radev, D. R. (Eds.), Proceedings of the AAAI Symposium on Intelligent Text Summarization, pp. 111­117, Stanford, CA, USA.
+Hori, C., & Furui, S. (2004). Speech summarization: an approach through word extraction and a method for evaluation. IEICE Transactions on Information and Systems, E87D (1), 15­25.
+Jing, H. (2000). Sentence reduction for automatic text summarization. In Proceedings of the 6th Applied Natural Language Processing Conference, pp. 310­315, Seattle,WA, USA.
+Knight, K., & Marcu, D. (2002). Summarization beyond sentence extraction: a probabilistic approach to sentence compression. Artificial Intelligence, 139 (1), 91­107.
+Land, A. H., & Doig, A. G. (1960). An automatic method for solving discrete programming problems. Econometrica, 28, 497­520.
+Lin, C.-Y. (2003). Improving summarization performance by sentence compression -- a pilot study. In Proceedings of the 6th International Workshop on Information Retrieval with Asian Languages, pp. 1­8, Sapporo, Japan.
+Lin, D. (2001). LaTaT: Language and text analysis tools. In Proceedings of the first Human Language Technology Conference, pp. 222­227, San Francisco, CA, USA.
 427
 
 Clarke & Lapata
-Marciniak, T., & Strube, M. (2005). Beyond the pipeline: Discrete optimization in NLP. In Proceedings of the Ninth Conference on Computational Natural Language Learning, pp. 136Â­143, Ann Arbor, MI, USA.
+Marciniak, T., & Strube, M. (2005). Beyond the pipeline: Discrete optimization in NLP. In Proceedings of the Ninth Conference on Computational Natural Language Learning, pp. 136­143, Ann Arbor, MI, USA.
 McDonald, R. (2006). Discriminative sentence compression with soft syntactic constraints. In Proceedings of the 11th Conference of the European Chapter of the Association for Computational Linguistics, Trento, Italy.
-McDonald, R., Crammer, K., & Pereira, F. (2005a). Flexible text segmentation with structured multilabel classification. In Proceedings of Human Language Technology Conference and Conference on Empirical Methods in Natural Language Processing, pp. 987Â­994, Vancouver, BC, Canada.
-McDonald, R., Crammer, K., & Pereira, F. (2005b). Online large-margin training of dependency parsers. In 43rd Annual Meeting of the Association for Computational Linguistics, pp. 91Â­98, Ann Arbor, MI, USA.
+McDonald, R., Crammer, K., & Pereira, F. (2005a). Flexible text segmentation with structured multilabel classification. In Proceedings of Human Language Technology Conference and Conference on Empirical Methods in Natural Language Processing, pp. 987­994, Vancouver, BC, Canada.
+McDonald, R., Crammer, K., & Pereira, F. (2005b). Online large-margin training of dependency parsers. In 43rd Annual Meeting of the Association for Computational Linguistics, pp. 91­98, Ann Arbor, MI, USA.
 Nemhauser, G. L., & Wolsey, L. A. (1988). Integer and Combinatorial Optimization. WileyInterscience series in discrete mathematicals and opitmization. Wiley, New York, NY, USA.
-Nguyen, M. L., Shimazu, A., Horiguchi, S., Ho, T. B., & Fukushi, M. (2004). Probabilistic sentence reduction using support vector machines. In Proceedings of the 20th international conference on Computational Linguistics, pp. 743Â­749, Geneva, Switzerland.
+Nguyen, M. L., Shimazu, A., Horiguchi, S., Ho, T. B., & Fukushi, M. (2004). Probabilistic sentence reduction using support vector machines. In Proceedings of the 20th international conference on Computational Linguistics, pp. 743­749, Geneva, Switzerland.
 Press, W. H., Teukolsky, S. A., Vetterling, W. T., & Flannery, B. P. (1992). Numerical Recipes in C: The Art of Scientific Computing. Cambridge University Press, New York, NY, USA.
-Punyakanok, V., Roth, D., Yih, W., & Zimak, D. (2004). Semantic role labeling via integer linear programming inference. In Proceedings of the International Conference on Computational Linguistics, pp. 1346Â­1352, Geneva, Switzerland.
-Riedel, S., & Clarke, J. (2006). Incremental integer linear programming for non-projective dependency parsing. In Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing, pp. 129Â­137, Sydney, Australia.
-Riezler, S., King, T. H., Crouch, R., & Zaenen, A. (2003). Statistical sentence condensation using ambiguity packing and stochastic disambiguation methods for lexical-functional grammar. In Human Language Technology Conference and the 3rd Meeting of the North American Chapter of the Association for Computational Linguistics, pp. 118Â­ 125, Edmonton, Canada.
-Roark, B. (2001). Probabilistic top-down parsing and language modeling. Computational Linguistics, 27 (2), 249Â­276.
-Roth, D. (1998). Learning to resolve natural language ambiguities: A unified approach. In In Proceedings of the 15th of the American Association for Artificial Intelligence, pp. 806Â­813, Madison, WI, USA.
-Roth, D., & Yih, W. (2004). A linear programming formulation for global inference in natural language tasks. In Proceedings of the Annual Conference on Computational Natural Language Learning, pp. 1Â­8, Boston, MA, USA.
+Punyakanok, V., Roth, D., Yih, W., & Zimak, D. (2004). Semantic role labeling via integer linear programming inference. In Proceedings of the International Conference on Computational Linguistics, pp. 1346­1352, Geneva, Switzerland.
+Riedel, S., & Clarke, J. (2006). Incremental integer linear programming for non-projective dependency parsing. In Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing, pp. 129­137, Sydney, Australia.
+Riezler, S., King, T. H., Crouch, R., & Zaenen, A. (2003). Statistical sentence condensation using ambiguity packing and stochastic disambiguation methods for lexical-functional grammar. In Human Language Technology Conference and the 3rd Meeting of the North American Chapter of the Association for Computational Linguistics, pp. 118­ 125, Edmonton, Canada.
+Roark, B. (2001). Probabilistic top-down parsing and language modeling. Computational Linguistics, 27 (2), 249­276.
+Roth, D. (1998). Learning to resolve natural language ambiguities: A unified approach. In In Proceedings of the 15th of the American Association for Artificial Intelligence, pp. 806­813, Madison, WI, USA.
+Roth, D., & Yih, W. (2004). A linear programming formulation for global inference in natural language tasks. In Proceedings of the Annual Conference on Computational Natural Language Learning, pp. 1­8, Boston, MA, USA.
 428
 
 Global Inference for Sentence Compression
-Roth, D., & Yih, W. (2005). Integer linear programming inference for conditional random fields. In Proceedings of the International Conference on Machine Learning, pp. 737Â­ 744, Bonn.
+Roth, D., & Yih, W. (2005). Integer linear programming inference for conditional random fields. In Proceedings of the International Conference on Machine Learning, pp. 737­ 744, Bonn.
 Sarawagi, S., & Cohen, W. W. (2004). Semi-markov conditional random fields for information extraction. In Advances in Neural Information Processing Systems, Vancouver, BC, Canada.
-Shieber, S., & Schabes, Y. (1990). Synchronous tree-adjoining grammars. In Proceedings of the 13th International Conference on Computational Linguistics, pp. 253Â­258, Helsinki, Finland.
-Turner, J., & Charniak, E. (2005). Supervised and unsupervised learning for sentence compression. In Proceedings of the 43rd Annual Meeting of the Association for Computational Linguistics, pp. 290Â­297, Ann Arbor, MI, USA.
-Vandeghinste, V., & Pan, Y. (2004). Sentence compression for automated subtitling: A hybrid approach. In Marie-Francine Moens, S. S. (Ed.), Text Summarization Branches Out: Proceedings of the ACL-04 Workshop, pp. 89Â­95, Barcelona, Spain.
+Shieber, S., & Schabes, Y. (1990). Synchronous tree-adjoining grammars. In Proceedings of the 13th International Conference on Computational Linguistics, pp. 253­258, Helsinki, Finland.
+Turner, J., & Charniak, E. (2005). Supervised and unsupervised learning for sentence compression. In Proceedings of the 43rd Annual Meeting of the Association for Computational Linguistics, pp. 290­297, Ann Arbor, MI, USA.
+Vandeghinste, V., & Pan, Y. (2004). Sentence compression for automated subtitling: A hybrid approach. In Marie-Francine Moens, S. S. (Ed.), Text Summarization Branches Out: Proceedings of the ACL-04 Workshop, pp. 89­95, Barcelona, Spain.
 Williams, H. P. (1999). Model Building in Mathematical Programming (4th edition). Wiley. Winston, W. L., & Venkataramanan, M. (2003). Introduction to Mathematical Program-
 ming: Applications and Algorithms (4th edition). Duxbury. Zajic, D., Door, B. J., Lin, J., & Schwartz, R. (2007). Multi-candidate reduction: Sentence
-compression as a tool for document summarization tasks. Information Processing Management Special Issue on Summarization, 43 (6), 1549Â­1570.
+compression as a tool for document summarization tasks. Information Processing Management Special Issue on Summarization, 43 (6), 1549­1570.
 429
 
 
