@@ -89,7 +89,7 @@ def recupCorps(fichier):
 
 def recupConclusion(fichier) :
     keywordConclusion = ["Conclusions", "Conclusion", "CONCLUSION", "CONCLUSIONS"]
-    keywordFinConclu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE"]
+    keywordFinConclu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE", "Appendix", "APPENDIX"]
     file = open(fichier, 'r')
     lines = file.readlines()
     conclusion = list()
@@ -102,8 +102,27 @@ def recupConclusion(fichier) :
             if (len(line) < 50) and any(x in line for x in keywordFinConclu) :
                 return conclusion
             else :
-                print(line)
                 conclusion.append(line)
+
+def recupDiscussion(fichier) :
+    keywordDiscussion = ["Discussions", "Discussion", "DISCUSSION", "DISCUSSIONS"]
+    keywordFinDiscu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE", "Conclusions", "Conclusion", "CONCLUSION", "CONCLUSIONS", "Appendix", "APPENDIX"]
+    file = open(fichier, 'r')
+    lines = file.readlines()
+    discussion = list()
+    debutDiscu=False
+    for line in lines :
+        if not debutDiscu :
+            if (len(line) < 50) and any(x in line for x in keywordDiscussion) :
+                debutDiscu=True
+        else :
+            if (len(line) < 50) and any(x in line for x in keywordFinDiscu) :
+                return discussion
+            else :
+                print(line)
+                discussion.append(line)
+
+recupDiscussion("CORPUS_TRAIN/Torres.txt")
 
 
 # On parcourt chaque fichier du dossier "Pdftotext"
