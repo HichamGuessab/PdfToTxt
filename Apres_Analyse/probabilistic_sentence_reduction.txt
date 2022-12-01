@@ -5,54 +5,11 @@ Probabilistic Sentence Reduction Using Support Vector Machines
 
 ______________________________
 Abstract
-This paper investigates a novel application of support vector machines (SVMs) for sentence reduction.
-We also propose a new probabilistic sentence reduction method based on support vector machine learning. Experimental results show that the proposed
-methods outperform earlier methods in term of sentence reduction performance.
-
-1
+This paper investigates a novel application of support vector machines (SVMs) for sentence reduction. We also propose a new probabilistic sentence reduction method based on support vector machine learning. Experimental results show that the proposed methods outperform earlier methods in term of sentence reduction performance.
 
 ______________________________
-Minh Le Nguyen, Akira Shimazu, Susumu Horiguchi
-Bao Tu Ho and Masaru Fukushi
-Japan Advanced Institute of Science and Technology
-1-8, Tatsunokuchi, Ishikawa, 923-1211, JAPAN
+Minh Le Nguyen, Akira Shimazu, Susumu Horiguchi Bao Tu Ho and Masaru Fukushi
+Japan Advanced Institute of Science and Technology 1-8, Tatsunokuchi, Ishikawa, 923-1211, JAPAN
 {nguyenml, shimazu, hori, bao, mfukushi}@jaist.ac.jp
 
-______________________________
-References
-A. Borthwick, “A Maximum Entropy Approach
-to Named Entity Recognition”, Ph.D thesis, Computer Science Department, New York
-University (1999).
-C.-C. Chang and C.-J. Lin,
-“LIBSVM: a library for support vector machines”, Software available at
-http://www.csie.ntu.edu.tw/ cjlin/libsvm.
-H. Jing, “Sentence reduction for automatic
-text summarization”, In Proceedings of the
-First Annual Meeting of the North American Chapter of the Association for Computational Linguistics NAACL-2000.
-T.T. Hastie and R. Tibshirani, “Classification
-by pairwise coupling”, The Annals of Statistics, 26(1): pp. 451-471, 1998.
-C.-W. Hsu and C.-J. Lin, “A comparison of
-methods for multi-class support vector machines”, IEEE Transactions on Neural Networks, 13, pp. 415-425, 2002.
-K. Knight and D. Marcu, “Summarization beyond sentence extraction: A Probabilistic approach to sentence compression”, Artificial
-Intelligence 139: pp. 91-107, 2002.
-C.Y. Lin, “Improving Summarization Performance by Sentence Compression — A Pilot Study”, Proceedings of the Sixth International Workshop on Information Retrieval
-with Asian Languages, pp.1-8, 2003.
-C. Macleod and R. Grishman, “COMMLEX
-syntax Reference Manual”; Proteus Project,
-New York University (1995).
-M.L. Nguyen and S. Horiguchi, “A new sentence
-reduction based on Decision tree model”,
-Proceedings of 17th Pacific Asia Conference
-on Language, Information and Computation,
-pp. 290-297, 2003
-V. Vapnik, “The Natural of Statistical Learning
-Theory”, New York: Springer-Verlag, 1995.
-J. Platt,“ Probabilistic outputs for support vector machines and comparison to regularized
-likelihood methods,” in Advances in Large
-Margin Classifiers, Cambridege, MA: MIT
-Press, 2000.
-B. Scholkopf et al, “Comparing Support Vector Machines with Gausian Kernels to Radius
-Basis Function Classifers”, IEEE Trans. Signal Procesing, 45, pp. 2758-2765, 1997.
-
-
 ______________________________

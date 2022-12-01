@@ -43,7 +43,7 @@ def CreateFileInAFolder(fileName: str, folderName: str):
     print("Création du fichier : "+fileName + "dans le directory :" + folderName)
     # for i in range(len(tableauDesTxtSansLeTxt)):
     nom = fileName+".txt"
-    f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+    f = open(folderName+"/"+nom, "x", encoding="ascii", errors='ignore')         # Création du fichier dans le dossier "Apres_Analyse"
     f.close()
     
 def supp_start_spaces_from_lines_(table):
@@ -65,17 +65,18 @@ def supp_void_lines_from_table(table):
         table[i] = table[i][:index]
     return table
 
-# NE SERT PLUS A RIEN
+# SUPPRIMER
+# pdftotxtV4
 # Avant nous servait à supprimer les lignes qui n'avaient rien à voir avoir notre texte (option -layout)
-def supp_lines_from_tables_if_x_spaces_at_start(table):
-    # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
-    x = 0
-    tableau_index = [0] * len(table)
-    for i in range(len(table)):
-        if(table[i][0:15]=="               "):
-            # print("hey")
-            x+=1
-            tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
+# def supp_lines_from_tables_if_x_spaces_at_start(table):
+#     # Localisation des index des lignes où il n'y a rien au début (tableau de booleans)
+#     x = 0
+#     tableau_index = [0] * len(table)
+#     for i in range(len(table)):
+#         if(table[i][0:15]=="               "):
+#             # print("hey")
+#             x+=1
+#             tableau_index[i] = 1                 # ranger les index qui ne sont pas bon dans un tableau
     
     # Suppression des lignes où il y a des espaces au début
     d = 0
@@ -104,7 +105,7 @@ def supp_lines_from_table_after_5_spaces(table):
 def RecupTitle(fichier):
     connectors = ["with", "without", "of", "for", "An ", "OF"] # Mots de liaisons
     skipCharacters = ["From", "Journal", "Submitted"] # Mot qui ne font pas parti du titre
-    file1 = open(fichier, 'r')
+    file1 = open(fichier, 'r', encoding="ascii", errors='ignore')
     titre = ""
     global nb_title_line
     nb_title_line = 0
@@ -140,7 +141,7 @@ def RecupTitle(fichier):
         nb_title_line += 1
     else :
         ligne = file1.readline() # Sinon on passe à la ligne suivante 
-        if any(x in ligne for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
+        if any(x in ligne[0] for x in connectors): # Si on rencontre un connecteur dans la deuxième ligne
             titre+=ligne # On ajoute la ligne suivante au titre (suite du titre)
             nb_title_line += 1
     file1.close()
@@ -164,7 +165,7 @@ def RecupAbstract(fichier):
     # Chercher la ligne où se situe le mot "Abstract"
     abstractFound = False
     j = 0
-    file = open(fichier, "r")
+    file = open(fichier, "r", encoding="ascii", errors='ignore')
     for line in file:
         nb_abstract_line += 1
         if word1 in line or word2 in line:
@@ -178,7 +179,7 @@ def RecupAbstract(fichier):
     global nb_keyword_line
     nb_keyword_line = 0
     
-    file = open(fichier, "r")
+    file = open(fichier, "r", encoding="ascii", errors='ignore')
     keywordFound = False
 
     for line in file:
@@ -197,8 +198,8 @@ def RecupAbstract(fichier):
 # nb_keyword_line est maintenant la ligne où le keyword se situe
     # On doit traiter le cas où le mot "Abstract" n'est pas présent
     if(abstractFound == True):
-        with open(fichier, "r") as f:
-            lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-2]
+        with open(fichier, "r", encoding="ascii", errors='ignore') as f:
+            lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-1]
             tableau_base = [""] * len(lines)
             i = 0
             # stocker toutes les lignes dans un tableau
@@ -206,10 +207,10 @@ def RecupAbstract(fichier):
                 tableau_base[i] = line
                 i+=1
     else:
-        with open(fichier, "r") as f:
+        with open(fichier, "r", encoding="ascii", errors='ignore') as f:
             # On a notre ligne Introduction (nb_keyword_line) mais pas notre mot clé "Abstract"
             # Faut maintenant stocker dans une liste en remontant le keyword 
-            lines = f.readlines()[0:nb_keyword_line-1]
+            lines = f.readlines()[nb_keyword_line-2:nb_keyword_line-1]
             tableau_base = [""] * len(lines)
             i = 0
             # stocker toutes les lignes dans un tableau
@@ -217,32 +218,33 @@ def RecupAbstract(fichier):
                 tableau_base[i] = line
                 i+=1
     file.close()
-
     # Traitement du cas où le mot clé "abstract" n'a pas été trouvé
+    # pdftotxtV4
     if(abstractFound == False):
-        # print("Abstract non trouvé")
-        # print(nb_keyword_line)
-        j = 0
-        for i in range(len(tableau_base)):
-            if(tableau_base[i]=="\n"):
-            #     j+=1
-            #     if (tableau_base[i+1]=="\n"):
-            #         j+=1
-            #     else:
-            #         j=0
-            # if(j == 2):
-                nb_abstract_line = i+1
-                # print("oula", i)
-                for x in range(i+1):
-                    tableau_base.pop(0)
-                break
+        nb_abstract_line = nb_keyword_line -1
+    #     # print("Abstract non trouvé")
+    #     # print(nb_keyword_line)
+    #     j = 0
+    #     for i in range(len(tableau_base)):
+    #         if(tableau_base[i]=="\n"):
+    #         #     j+=1
+    #         #     if (tableau_base[i+1]=="\n"):
+    #         #         j+=1
+    #         #     else:
+    #         #         j=0
+    #         # if(j == 2):
+    #             nb_abstract_line = i+1
+    #             # print("oula", i)
+    #             for x in range(i+1):
+    #                 tableau_base.pop(0)
+    #             break
         # for i in range(len(tableau_base)):
         #     print(tableau_base[i])
     tableau_base = supp_void_lines_from_table(tableau_base)
     return tableau_base
     
 def RecupAuteurs(fichier):
-    f = open(fichier, "r")
+    f = open(fichier, "r", encoding="ascii", errors='ignore')
     lines = f.readlines()[nb_title_line:nb_abstract_line-1]
     tableau_base = [""] * len(lines)
     i = 0
@@ -252,23 +254,23 @@ def RecupAuteurs(fichier):
         # print(tableau_base[i])
         i+=1
     
-    
+    # pdftotxtV4
     # Pour torres.txt
     # Si le tableau fait plus de 25 lignes
-    if (len(tableau_base) > 20):
-        # print("plus de 20")
-        # On check si les 10 dernières lignes sont vides
-        for i in reversed(range(len(tableau_base)-10, len(tableau_base))):
-            # Si c'est le cas, on les supprime
-            if (tableau_base[i] == "\n"):
-                # print("aha")
-                tableau_base.pop(i)
-        # tableau_base.pop(len(tableau_base)-1)
-        for i in reversed(tableau_base):
-            if (i != "\n"):
-                tableau_base.pop(tableau_base.index(i))
-            else:
-                break
+    # if (len(tableau_base) > 25):
+    #     # print("plus de 20")
+    #     # On check si les 10 dernières lignes sont vides
+    #     for i in reversed(range(len(tableau_base)-10, len(tableau_base))):
+    #         # Si c'est le cas, on les supprime
+    #         if (tableau_base[i] == "\n"):
+    #             # print("aha")
+    #             tableau_base.pop(i)
+    #     # tableau_base.pop(len(tableau_base)-1)
+    #     for i in reversed(tableau_base):
+    #         if (i != "\n"):
+    #             tableau_base.pop(tableau_base.index(i))
+    #         else:
+    #             break
     
     # Suppresion des sauts de ligne
     for i in tableau_base:
@@ -276,39 +278,39 @@ def RecupAuteurs(fichier):
             tableau_base.pop(tableau_base.index(i))
     return tableau_base
 
+# pdftotxtV4 A SUPPRIMER CAR ABDEL A DEVELOPPE DE SON COTE
+# def RecupReferences(fichier):
+#     keywordReferences = ["References", "REFERENCES"]
+#     nb_reference_line = 0
+    
+#     # Récupération du nombre de ligne du fichier
+#     file = open(fichier, "r", encoding="ascii", errors='ignore')
+#     nb_lines = 0
+#     for line in (open(fichier, "r", encoding="ascii", errors='ignore').readlines()):
+#         nb_lines += 1
 
-def RecupReferences(fichier):
-    keywordReferences = ["References", "REFERENCES"]
-    nb_reference_line = 0
+#     # On récupère la ligne où apparait le premier référence à partir du bas
+#     length = 0              # Nombre de lignes où les REFERENCES apparaissent
+#     for line in reversed(open(fichier, "r", encoding="ascii", errors='ignore').readlines()):
+#         if any(x in line for x in keywordReferences):
+#             # print("REFERENCES found ! Line : ")
+#             # print(nb_lines - length)
+#             break
+#         length += 1
+#     file.close()
     
-    # Récupération du nombre de ligne du fichier
-    file = open(fichier, "r")
-    nb_lines = 0
-    for line in (open(fichier).readlines()):
-        nb_lines += 1
-
-    # On récupère la ligne où apparait le premier référence à partir du bas
-    length = 0              # Nombre de lignes où les REFERENCES apparaissent
-    for line in reversed(open(fichier).readlines()):
-        if any(x in line for x in keywordReferences):
-            # print("REFERENCES found ! Line : ")
-            # print(nb_lines - length)
-            break
-        length += 1
-    file.close()
+#     nb_reference_line = nb_lines - length
+#     with open(fichier, "r", encoding="ascii", errors='ignore') as f:
+#         lines = f.readlines()[nb_reference_line-1:]
+#         i = 0
+#         tableau_base = [""] * len(lines)
+#         # stocker toutes les lignes dans un tableau
+#         for line in lines:
+#             tableau_base[i] = line
+#             i+=1
+#     file.close()
     
-    nb_reference_line = nb_lines - length
-    with open(fichier, "r") as f:
-        lines = f.readlines()[nb_reference_line-1:]
-        i = 0
-        tableau_base = [""] * len(lines)
-        # stocker toutes les lignes dans un tableau
-        for line in lines:
-            tableau_base[i] = line
-            i+=1
-    file.close()
-    
-    return tableau_base
+#     return tableau_base
     
     # for line in reversed(open(fichier).readlines()):
     #     print (line.rstrip())
@@ -334,7 +336,7 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
     # Créer le fichier "x"
     CreateFileInAFolder(TableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
     # Ecrire dans le fichier "x"
-    with open(folderName+"/"+ x, "a") as f:
+    with open(folderName+"/"+ x, "a", encoding="ascii", errors='ignore') as f:
         # Ecrire le nom de fichier sans espace
         f.write(TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
         f.write("\n")
@@ -361,13 +363,15 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
-
-        ReferencesTableStrings = RecupReferences(pathFile)
-        for v in range(len(ReferencesTableStrings)):
-            f.write(ReferencesTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
+    
+        # pdftotxtV4
+        # A SUPPRIMER CAR ABDEL A DEVELOPPE DE SON COTE
+        # ReferencesTableStrings = RecupReferences(pathFile)
+        # for v in range(len(ReferencesTableStrings)):
+        #     f.write(ReferencesTableStrings[v])
+        # f.write("\n")
+        # f.write("______________________________")
+        # f.write("\n")
         
         #test pour le xml 
     i += 1
