@@ -64,7 +64,7 @@ def RecupTitlesInATable(path):
     #for i in range(len(tableauDesFichiers)) :
         
 def recupCorps(fichier):
-        keywordsIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
+        keywordIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
         keywordFinCorps = ["Discussion", "DISCUSSION", "discussions", "Discussions", "DISCUSSIONS", "Conclusion", "CONCLUSION", "conclusion"]
         keywordDebutCorps = ["2.", "2", "2", "II.", "II"]
         file1 = open(fichier, 'r')
@@ -75,7 +75,7 @@ def recupCorps(fichier):
         for line in lines :
             if not debutCorps :
                 if not debutIntro :
-                    if any(x in line for x in keywordsIntro) :
+                    if any(x in line for x in keywordIntro) :
                         debutIntro=True
                 else :
                     words = list(line.split(" "))
@@ -83,12 +83,27 @@ def recupCorps(fichier):
                         debutCorps=True
             else :
                 if any(x in line for x in keywordFinCorps) and len(line) < 40 :
-                    break;
+                    return corps
                 else :
                     corps.append(line)
-        for line in corps :
-            print(line)
-        return corps
+
+def recupConclusion(fichier) :
+    keywordConclusion = ["Conclusions", "Conclusion", "CONCLUSION", "CONCLUSIONS"]
+    keywordFinConclu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE"]
+    file = open(fichier, 'r')
+    lines = file.readlines()
+    conclusion = list()
+    debutConclusion=False
+    for line in lines :
+        if not debutConclusion :
+            if (len(line) < 50) and any(x in line for x in keywordConclusion) :
+                debutConclusion=True
+        else :
+            if (len(line) < 50) and any(x in line for x in keywordFinConclu) :
+                return conclusion
+            else :
+                print(line)
+                conclusion.append(line)
 
 
 # On parcourt chaque fichier du dossier "Pdftotext"
