@@ -45,19 +45,42 @@ def createFileInAFolder(fileName: str, folderName: str):
     f.close()
 
 def recupIntroduction(fichier):
-    Characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
-    numLine = 1
-    file = open(fichier, 'r')
+    characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
+    finalCharacters = ["2.", "2", "II.", "II"]
+    introductionLine = 1
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
     for line in file :
-        if any(x in line for x in Characters):
+        if any(x in line for x in characters):
             break
-        numLine += 1
+        introductionLine += 1
+    endOfIntroduction = introductionLine
+    for line in file:
+        endOfIntroduction += 1
+        if(len(line) > 3):
+            if any(x in line[0] for x in finalCharacters):
+                if(not line[1].isdigit()):
+                    break
+            elif any(x in line[1] for x in finalCharacters):
+                if(not line[2].isdigit()):
+                    break
+            elif line[0] == "I":
+                line = line.split()
+                if any(x in line[0] for x in finalCharacters):
+                    break
     file.close()
-    print(numLine)
+    print(endOfIntroduction)
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    lines = file.readlines()[introductionLine:endOfIntroduction-1]
+    file.close()
+    return lines
 
-    
+
 
 
 path = "Pdftotext/"
 tab = recupNamesOfTheTxtFiles(path)
-recupIntroduction("Pdftotext/Torres.txt")
+for file in tab:
+    print(file)
+    recupIntroduction("Pdftotext/"+file)
+
+#lines = file.readlines()[introductionLine:endOfIntroduction-1]
