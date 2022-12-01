@@ -74,13 +74,27 @@ def recupIntroduction(fichier):
     file.close()
     return intro
 
-
+def recupReferences(fichier):
+    characters = ["References", "REFERENCES"]
+    referenceLine = 1
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    numLine = 1
+    for line in file :
+        if any(x in line for x in characters):
+            referenceLine = numLine
+        numLine += 1
+    file.close()
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    references = file.readlines()[referenceLine:numLine-1]
+    file.close()
+    print(references)
+    return references
 
 
 path = "Pdftotext/"
 tab = recupNamesOfTheTxtFiles(path)
 for file in tab:
     print(file)
-    recupIntroduction("Pdftotext/"+file)
+    recupReferences("Pdftotext/"+file)
 
 #lines = file.readlines()[introductionLine:endOfIntroduction-1]
