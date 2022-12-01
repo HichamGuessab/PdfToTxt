@@ -67,7 +67,7 @@ def recupCorps(fichier):
         keywordIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
         keywordFinCorps = ["Discussion", "DISCUSSION", "discussions", "Discussions", "DISCUSSIONS", "Conclusion", "CONCLUSION", "conclusion"]
         keywordDebutCorps = ["2.", "2", "2", "II.", "II"]
-        file1 = open(fichier, 'r')
+        file1 = open(fichier, 'r', encoding="utf-8", errors='ignore')
         lines = file1.readlines()
         corps = list()
         debutCorps=False
@@ -90,7 +90,7 @@ def recupCorps(fichier):
 def recupConclusion(fichier) :
     keywordConclusion = ["Conclusions", "Conclusion", "CONCLUSION", "CONCLUSIONS"]
     keywordFinConclu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE", "Appendix", "APPENDIX"]
-    file = open(fichier, 'r')
+    file = open(fichier, 'r', encoding="utf-8", errors='ignore')
     lines = file.readlines()
     conclusion = list()
     debutConclusion=False
@@ -107,7 +107,7 @@ def recupConclusion(fichier) :
 def recupDiscussion(fichier) :
     keywordDiscussion = ["Discussions", "Discussion", "DISCUSSION", "DISCUSSIONS"]
     keywordFinDiscu = ["Acknowledgements", "Acknowledgments", "Acknowledgement", "Acknowledgment", "References", "Reference", "ACKNOWLEDGMENT", "ACKNOWLEDGMENTS", "REFERENCES", "REFERENCE", "Conclusions", "Conclusion", "CONCLUSION", "CONCLUSIONS", "Appendix", "APPENDIX"]
-    file = open(fichier, 'r')
+    file = open(fichier, 'r', encoding="utf-8", errors='ignore')
     lines = file.readlines()
     discussion = list()
     debutDiscu=False
