@@ -1,5 +1,6 @@
 import os
 import sys
+<<<<<<< HEAD
 
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
 
@@ -9,50 +10,81 @@ import sys
 #sous_dossier = sys.argv[1]
 
 
+=======
+import shutil
+import re
+>>>>>>> 016996867882b869cbab69fe4660c2f32a2e901f
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
-def RecupNamesOfThePdfFiles(path):
-    print("Récupération des titres des PDF dans un tableau")
+def recupNamesOfTheTxtFiles(path):
+    #print("Récupération des titres des PDF dans un tableau")
     tableau_des_TXT = os.listdir(path)                                  # Tableau contenant les nom des fichiers du sous_dossier AVEC le ".txt"
     return tableau_des_TXT
 
-def DeleteDotTxtFromAStringTable(table):
+def deleteDotTxtFromAStringTable(table):
     tableau_des_TXT_sans_le_txt = [""] * len(table)                     # Tableau contenant les nom des fichiers du sous_dossier SANS le ".txt" 
     for i in range(len(table)) :
         tableau_des_TXT_sans_le_txt[i] = table[i][:-4]
     return tableau_des_TXT_sans_le_txt
 
 # Supprimer le dossier Apres_Analyse s'il existe, le créer après vérification
-def CreateAfterDeleteDirectory():
-    if os.path.exists("Apres_Analyse"):
-        os.remove("Apres_Analyse")
-        print("'Apres_Analyse' directory deleted")
-    # Création du dossier "Apres_Analyse"
-    os.mkdir("Apres_Analyse")
-    print("'Apres_Analyse' directory created")
+def createAfterDeleteDirectory(folderName: str):
+    if os.path.exists(folderName):
+        shutil.rmtree(folderName)
+        print(folderName+" directory deleted")
+    # Création du dossier folderName
+    os.mkdir(folderName)
+    print(folderName+" directory created")
 
 # Supprimer les espaces des String d'un tableau de String
-def SuppSpacesFromStringTables(stringTable):
-    print("Suppression des espaces des String d'un tableau de String")
+def suppSpacesFromStringTables(stringTable):
+    # print("Suppression des espaces des String d'un tableau de String")
     for i in range(len(stringTable)):
-        stringTable[i] = SuppSpacesFromString(stringTable[i])
+        stringTable[i] = suppSpacesFromString(stringTable[i])
     return stringTable
 
 # Supprimer les espaces d'un String
-def SuppSpacesFromString(name: str):
-    print("Suppression des espaces d'un String")
+def suppSpacesFromString(name: str):
+    # print("Suppression des espaces d'un String")
     name.replace(" ", "_")
     return name
 
 # Créer tous les fichiers d'un tableau ayant le même nom sans les espaces
-def CreateFiles(tableauDesTxtSansLeTxt):
-    print("Création des fichiers")
-    for i in range(len(tableauDesTxtSansLeTxt)):
-        nom = tableauDesTxtSansLeTxt[i]+".txt"
-        f = open("Apres_Analyse/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+def createFileInAFolder(fileName: str, folderName: str):
+    print("Création du fichier : "+fileName + "dans le directory :" + folderName)
+    # for i in range(len(tableauDesTxtSansLeTxt)):
+    nom = fileName+".txt"
+    f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+    f.close()
 
-# Récupérer le titre d'un fichier txt
-def RecupTitle(fichier):
-    print("Récupération du titre d'un fichier")
+def recupIntroduction(fichier):
+    characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
+    finalCharacters = ["2.", "2", "II.", "II"]
+    introductionLine = 1
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    for line in file :
+        if any(x in line for x in characters):
+            break
+        introductionLine += 1
+    endOfIntroduction = introductionLine
+    for line in file:
+        endOfIntroduction += 1
+        if(len(line) > 3):
+            if any(x in line[0] for x in finalCharacters):
+                if(not line[1].isdigit()):
+                    break
+            elif any(x in line[1] for x in finalCharacters):
+                if(not line[2].isdigit()):
+                    break
+            elif line[0] == "I":
+                line = line.split()
+                if any(x in line[0] for x in finalCharacters):
+                    break
+    file.close()
+    print(endOfIntroduction)
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    intro = file.readlines()[introductionLine:endOfIntroduction-1]
+    file.close()
+    return intro
 
 # Récupérer l'abstract d'un fichier
 def RecupAbstract(fichier):
@@ -90,19 +122,26 @@ def recupCorps(fichier):
             print(line)
         return corps
 
+def recupReferences(fichier):
+    characters = ["References", "REFERENCES"]
+    referenceLine = 1
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    numLine = 1
+    for line in file :
+        if any(x in line for x in characters):
+            referenceLine = numLine
+        numLine += 1
+    file.close()
+    file = open(fichier, 'r', encoding="ascii", errors='ignore')
+    references = file.readlines()[referenceLine:numLine-1]
+    file.close()
+    print(references)
+    return references
 
-# On parcourt chaque fichier du dossier "Pdftotext"
-# i = 0                               # Pour parcourir le tableau tableau_des_TXT_sans_le_txt en même temps que le tableau tableau_des_TXT
-# for x in tableau_des_TXT:
-    
-#     f = open(x)
-    
-#     f.write()
+path = "Pdftotext/"
+tab = recupNamesOfTheTxtFiles(path)
+for file in tab:
+    print(file)
+    recupReferences("Pdftotext/"+file)
 
-
-# for (x in tableau_des_PDF):
-    # f = open('')
-    # f.write()
-    # f.close()
-
-
+#lines = file.readlines()[introductionLine:endOfIntroduction-1]
