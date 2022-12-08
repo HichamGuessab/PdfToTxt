@@ -433,7 +433,7 @@ def recupReferences(fichier):
     # Tant qu'on a pas le mot "References"
     # On ajoute au tableau
 
-
+"""
 # def ConvertToTxt():
 path = "Pdftotext/"
 TableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
@@ -523,7 +523,7 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         
         #test pour le xml 
     i += 1
-
+"""
 # def ConvertToXml():
 #     Tab = recupNamesOfTheTxtFiles("Apres_Analyse")
 #     for file in Tab :
