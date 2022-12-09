@@ -394,7 +394,7 @@ def recupReferences(fichier):
     # print(references)
     return references
 
-if len(sys.argv) != 3 :
+if len(sys.argv) < 3 or len(sys.argv) > 4:
     print("Nombre d'arguments incorrect.")
     exit()
 path = sys.argv[1]
@@ -402,15 +402,22 @@ path = sys.argv[1]
 if re.search("/$", path) != "/":
     path = path+"/"
 typeSortie = sys.argv[2]
-if(typeSortie != "-t") or (typeSortie != "-x"):
+if(typeSortie != "-t") and (typeSortie != "-x"):
     print("Le second argument \""+typeSortie+"\" devrait etre \"-t\" ou \"-x\".")
     exit()
 
-# Debut du parseur. A mettre en commentaire jusqu'à "Fin du parseur..." quand on utilise les txts de Nico
-tableOfNamesOfPdfFilesWithDotPdf = recupNamesOfThePdfFiles(path)
-for file in tableOfNamesOfPdfFilesWithDotPdf:
-    os.system("pdftotext "+path+file.replace(" ","\\ "))
-# Fin du parseur. Il suffit de mettre les txts de Nico dans le dossier path avant de lancer le programme
+utiliserParseur = True
+
+if len(sys.argv) == 4:
+    if(sys.argv[3] == "-n"):
+        utiliserParseur = False
+
+# Debut du parseur
+if utiliserParseur :
+    tableOfNamesOfPdfFilesWithDotPdf = recupNamesOfThePdfFiles(path)
+    for file in tableOfNamesOfPdfFilesWithDotPdf:
+        os.system("pdftotext "+path+file.replace(" ","\\ "))
+# Fin du parseur. Il suffit de mettre les txts de Nico dans le dossier path avant de lancer le programme avec un troisième argument "-n" pour ne pas l'utiliser
 
 tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
 
@@ -487,8 +494,9 @@ for x in tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
             f.write(referencesTableStrings[v])
         f.write("\n")
 
-        # Supprime la sortie de pdftotext. A mettre en commentaire quand on utilise les txts de Nico
-        os.remove(pathFile)
+        # Supprime la sortie de pdftotext
+        if utiliserParseur:
+            os.remove(pathFile)
     i += 1
     
 
