@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 import re
+import subprocess
 from xml_file import *
 
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
@@ -9,11 +10,31 @@ from xml_file import *
 # Sous dossier contenant les fichier TXT à analyser
 #sous_dossier = sys.argv[1]
 
+# Récupérer le nom des fichiers du dossier contenant les fichiers en .pdf
+def recupNamesOfThePdfFiles(path):
+    tableau_des_pdf = os.listdir(path)
+    maxi = len(tableau_des_pdf)
+    i=0
+    while i < maxi :
+        if re.search("\.pdf$", tableau_des_pdf[i]) == None:
+            tableau_des_pdf.remove(tableau_des_pdf[i])
+            i-=1
+            maxi-=1
+        i+=1
+    return tableau_des_pdf
+
 # Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
 def recupNamesOfTheTxtFiles(path):
-    #print("Récupération des titres des PDF dans un tableau")
-    tableau_des_TXT = os.listdir(path)                                  # Tableau contenant les nom des fichiers du sous_dossier AVEC le ".txt"
-    return tableau_des_TXT
+    tableau_des_txt = os.listdir(path)
+    maxi = len(tableau_des_txt)
+    i=0
+    while i < maxi :
+        if re.search("\.txt$", tableau_des_txt[i]) == None:
+            tableau_des_txt.remove(tableau_des_txt[i])
+            i-=1
+            maxi-=1
+        i+=1
+    return tableau_des_txt
 
 def deleteDotTxtFromAStringTable(table):
     tableau_des_TXT_sans_le_txt = [""] * len(table)                     # Tableau contenant les nom des fichiers du sous_dossier SANS le ".txt" 
@@ -29,6 +50,11 @@ def createAfterDeleteDirectory(folderName: str):
     # Création du dossier folderName
     os.mkdir(folderName)
     print(folderName+" directory created")
+
+# Supprime le dossier s'il existe
+def deleteDirectory(folderName: str):
+    if os.path.exists(folderName):
+        shutil.rmtree(folderName)
 
 # Supprimer les espaces des String d'un tableau de String
 def suppSpacesFromStringTables(stringTable):
@@ -368,6 +394,104 @@ def recupReferences(fichier):
     # print(references)
     return references
 
+if len(sys.argv) != 3 :
+    print("Nombre d'arguments incorrect.")
+    exit()
+path = sys.argv[1]
+#Si path n'a pas de '/' à la fin, on le rajoute
+if re.search("/$", path) != "/":
+    path = path+"/"
+typeSortie = sys.argv[2]
+if(typeSortie != "-t") or (typeSortie != "-x"):
+    print("Le second argument \""+typeSortie+"\" devrait etre \"-t\" ou \"-x\".")
+    exit()
+
+# Debut du parseur. A mettre en commentaire jusqu'à "Fin du parseur..." quand on utilise les txts de Nico
+tableOfNamesOfPdfFilesWithDotPdf = recupNamesOfThePdfFiles(path)
+for file in tableOfNamesOfPdfFilesWithDotPdf:
+    os.system("pdftotext "+path+file.replace(" ","\\ "))
+# Fin du parseur. Il suffit de mettre les txts de Nico dans le dossier path avant de lancer le programme
+
+tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
+
+tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
+tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
+folderName = path+"Apres_Analyse"
+createAfterDeleteDirectory(folderName)
+
+i = 0
+for x in tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
+    # PathFile = fichier d'où l'on va récupérer les informations
+    pathFile = path + x
+    # Créer le fichier "x"
+    createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+    # Ecrire dans le fichier "x"
+    with open(folderName+"/"+ x, "a", encoding="ascii", errors='ignore') as f:
+        # Ecrire le nom de fichier sans espace
+        f.write(tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+
+        # Ecrire le nom du titre
+        f.write(RecupTitle(pathFile)+"\n")
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+
+        # Ecrire l'abstract
+        tableOfStrings = RecupAbstract(pathFile)
+        for v in range(len(tableOfStrings)):
+            f.write(tableOfStrings[v]+"\n")
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        auteursTableStrings = RecupAuteurs(pathFile)
+        for v in range(len(auteursTableStrings)):
+            f.write(auteursTableStrings[v])
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        introductionTableStrings = recupIntroduction(pathFile)
+        for v in range(len(introductionTableStrings)):
+            f.write(introductionTableStrings[v])
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        corpsTableStrings = recupCorps(pathFile)
+        for v in range(len(corpsTableStrings)):
+            f.write(corpsTableStrings[v])
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        conclusionTableStrings = recupConclusion(pathFile)
+        for v in range(len(conclusionTableStrings)):
+            f.write(conclusionTableStrings[v])
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        DiscussionTableStrings = recupDiscussion(pathFile)
+        for v in range(len(DiscussionTableStrings)):
+            f.write(DiscussionTableStrings[v])
+        f.write("\n")
+        f.write("______________________________")
+        f.write("\n")
+        
+        referencesTableStrings = recupReferences(pathFile)
+        for v in range(len(referencesTableStrings)):
+            f.write(referencesTableStrings[v])
+        f.write("\n")
+
+        # Supprime la sortie de pdftotext. A mettre en commentaire quand on utilise les txts de Nico
+        os.remove(pathFile)
+    i += 1
+    
+
 
 # SUPPRIMER
 # pdftotxtV4
@@ -435,82 +559,7 @@ def recupReferences(fichier):
 
 
 # def ConvertToTxt():
-path = "Pdftotext/"
-TableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
-TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(TableOfNamesOfTxtFilesWithDotTxt)
-TableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(TableOfNamesOfTxtFilesWithDotTxt)
 
-folderName = "Apres_Analyse"
-createAfterDeleteDirectory(folderName)
-
-i = 0
-for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
-    # PathFile = fichier d'où l'on va récupérer les informations
-    pathFile = path + x
-    # Créer le fichier "x"
-    createFileInAFolder(TableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
-    # Ecrire dans le fichier "x"
-    with open(folderName+"/"+ x, "a", encoding="ascii", errors='ignore') as f:
-        # Ecrire le nom de fichier sans espace
-        f.write(TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-
-        # Ecrire le nom du titre
-        f.write(RecupTitle(pathFile)+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-
-        # Ecrire l'abstract
-        tableOfStrings = RecupAbstract(pathFile)
-        for v in range(len(tableOfStrings)):
-            f.write(tableOfStrings[v]+"\n")
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        AuteursTableStrings = RecupAuteurs(pathFile)
-        for v in range(len(AuteursTableStrings)):
-            f.write(AuteursTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        IntroductionTableStrings = recupIntroduction(pathFile)
-        for v in range(len(IntroductionTableStrings)):
-            f.write(IntroductionTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        CorpsTableStrings = recupCorps(pathFile)
-        for v in range(len(CorpsTableStrings)):
-            f.write(CorpsTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        ConclusionTableStrings = recupConclusion(pathFile)
-        for v in range(len(ConclusionTableStrings)):
-            f.write(ConclusionTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        DiscussionTableStrings = recupDiscussion(pathFile)
-        for v in range(len(DiscussionTableStrings)):
-            f.write(DiscussionTableStrings[v])
-        f.write("\n")
-        f.write("______________________________")
-        f.write("\n")
-        
-        ReferencesTableStrings = recupReferences(pathFile)
-        for v in range(len(ReferencesTableStrings)):
-            f.write(ReferencesTableStrings[v])
-        f.write("\n")
-        
         
         # pdftotxtV4
         # A SUPPRIMER CAR ABDEL A DEVELOPPE DE SON COTE
@@ -522,7 +571,7 @@ for x in TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         # f.write("\n")
         
         #test pour le xml 
-    i += 1
+    
 
 # def ConvertToXml():
 #     Tab = recupNamesOfTheTxtFiles("Apres_Analyse")
