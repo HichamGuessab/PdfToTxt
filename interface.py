@@ -19,8 +19,9 @@ def convertToTxt(fichier):
 
     # Ecrire dans le fichier "x"
     with open(folderName+"/"+ fichier, "a", encoding="ascii", errors='ignore') as f:
+        
         # Ecrire le nom de fichier sans espace
-        f.write(fichier+"\n")
+        f.write(fichier[:-4]+"\n")
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
@@ -31,6 +32,7 @@ def convertToTxt(fichier):
         f.write("______________________________")
         f.write("\n")
 
+
         # Ecrire l'abstract
         tableOfStrings = RecupAbstract(pathFile)
         for v in range(len(tableOfStrings)):
@@ -38,7 +40,8 @@ def convertToTxt(fichier):
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
-        
+
+        # Ecrire le nom des auteurs 
         AuteursTableStrings = RecupAuteurs(pathFile)
         for v in range(len(AuteursTableStrings)):
             f.write(AuteursTableStrings[v])
@@ -86,6 +89,8 @@ def ConvertToXml(file):
 
 folderName = "Apres_Analyse"
 createAfterDeleteDirectory(folderName)
+createAfterDeleteDirectory("txt2XML")
+
 
 
 checkbox = []
@@ -98,7 +103,7 @@ window.title("Parser d'article scientifique")
 window.geometry("1920x900")
 window.config(background='#486400')
 
-window.iconbitmap("cacatoesque.ico")
+#window.iconbitmap("cacatoesque.ico")
 bgimg=PhotoImage(file = "ico.png")
 
 
@@ -118,6 +123,9 @@ radioXML.invoke()
 
 
 def affichage():
+    createAfterDeleteDirectory(folderName)
+    createAfterDeleteDirectory("txt2XML")
+
     for i in range(len(checkbox)):
         choix=""
         if checkbox[i].get()>=1:
