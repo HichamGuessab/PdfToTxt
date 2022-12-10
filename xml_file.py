@@ -64,7 +64,7 @@ def generate_xml(sortie):
         f.write("\n</article>")
 
     f.close()
-    print("Fichier xml créee !")
+    print("Fichier xml créé !")
 
 
 
