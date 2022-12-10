@@ -1,4 +1,4 @@
-ACL2004-HEADLINE.txt
+ACL2004-HEADLINE
 
 ______________________________
 Hybrid Headlines: Combining Topics and Sentence Compression 

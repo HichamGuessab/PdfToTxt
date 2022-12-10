@@ -62,9 +62,25 @@ def generate_xml(sortie):
         f.write("\n<abstract>")
         f.write(sortie[2])
         f.write("</abstract>\n")
+        #Balise abstract
+        f.write("\n<introduction>")
+        f.write(sortie[4])
+        f.write("</introduction>\n")
+        #Balise abstract
+        f.write("\n<corps>")
+        f.write(sortie[5])
+        f.write("</corps>\n")
+        #Balise abstract
+        f.write("\n<conclusion>")
+        f.write(sortie[6])
+        f.write("</conclusion>\n")
+        #Balise abstract
+        f.write("\n<discussion>")
+        f.write(sortie[7])
+        f.write("</discussion>\n")
         #Balise biblio
         f.write("\n<biblio>")
-        f.write(sortie[4])
+        f.write(sortie[8])
         f.write("\n</biblio>\n")
 
         f.write("\n</article>")

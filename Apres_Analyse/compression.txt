@@ -1,4 +1,4 @@
-compression.txt
+compression
 
 ______________________________
 Multi-Candidate Reduction: Sentence Compression as a Tool for Document Summarization Tasks 
