@@ -289,7 +289,7 @@ def RecupAuteurs(fichier):
 
 def recupIntroduction(fichier):
     characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
-    finalCharacters = ["2.", "2", "II.", "II"]
+    finalCharacters = ["2.", "2", "2", "II.", "II"]
     introductionLine = 1
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
     for line in file :
@@ -319,7 +319,7 @@ def recupIntroduction(fichier):
         
 def recupCorps(fichier):
         keywordIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
-        keywordFinCorps = ["Discussion", "DISCUSSION", "discussions", "Discussions", "DISCUSSIONS", "Conclusion", "CONCLUSION", "conclusion"]
+        keywordFinCorps = ["Discussion", "DISCUSSION", "discussions", "Discussions", "DISCUSSIONS", "Conclusion", "CONCLUSION", "conclusion", "References", "Reference", "REFERENCES", "REFERENCE"]
         keywordDebutCorps = ["2.", "2", "2", "II.", "II"]
         file1 = open(fichier, 'r', encoding="utf-8", errors='ignore')
         lines = file1.readlines()
@@ -333,11 +333,10 @@ def recupCorps(fichier):
                         debutIntro=True
                 else :
                     words = list(line.split(" "))
-                    if words[0] in keywordDebutCorps :
+                    if words[0] in keywordDebutCorps and len(line) < 60 :
                         debutCorps=True
             else :
                 if any(x in line for x in keywordFinCorps) and len(line) < 40 :
-                    # print(len(corps))
                     return corps
                 else :
                     corps.append(line)
