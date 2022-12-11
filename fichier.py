@@ -76,5 +76,3 @@ def RecupTitlesInATable(path):
     # f = open('')
     # f.write()
     # f.close()
-
-
