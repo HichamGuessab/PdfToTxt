@@ -311,34 +311,29 @@ def RecupAuteurs(fichier):
     return tableau_base
 
 def recupIntroduction(fichier):
-    characters = ["Introduction", "INTRODUCTION", "I NTRODUCTION"]
-    finalCharacters = ["2.", "2", "2", "II.", "II"]
-    introductionLine = 1
+    keywordsIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
+    keyWordsFinIntro = ["2.", "2", "2", "II.", "II"]
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
-    for line in file :
-        if any(x in line for x in characters):
-            break
-        introductionLine += 1
-    endOfIntroduction = introductionLine
-    for line in file:
-        endOfIntroduction += 1
-        if(len(line) > 3):
-            if any(x in line[0] for x in finalCharacters):
-                if(not line[1].isdigit()):
-                    break
-            elif any(x in line[1] for x in finalCharacters):
-                if(not line[2].isdigit()):
-                    break
-            elif line[0] == "I":
-                line = line.split()
-                if any(x in line[0] for x in finalCharacters):
-                    break
+    lines = file.readlines()
+    intro = list()
+    debutIntro = False
+    for line in lines :
+        if not debutIntro:
+            if any(x in line for x in keywordsIntro): #Début de l'intro
+                debutIntro = True
+        else :
+            words = list(line.split(" "))
+            if words[0] in keyWordsFinIntro and len(line) < 75 : # Fin de l'intro
+                file.close()
+                return intro
+            else:
+                intro.append(line)
+
     file.close()
-    # print(endOfIntroduction)
-    file = open(fichier, 'r', encoding="ascii", errors='ignore')
-    intro = file.readlines()[introductionLine:endOfIntroduction-1]
-    file.close()
-    return intro
+    if intro:
+        return intro
+    else:
+        return ("Introduction non trouvée")
         
 def recupCorps(fichier):
         keywordIntro = ["Introduction", "INTRODUCTION", "I NTRODUCTION", "introduction"]
@@ -356,13 +351,15 @@ def recupCorps(fichier):
                         debutIntro=True
                 else :
                     words = list(line.split(" "))
-                    if words[0] in keywordDebutCorps and len(line) < 60 :
+                    if words[0] in keywordDebutCorps and len(line) < 75 :
                         debutCorps=True
             else :
                 if any(x in line for x in keywordFinCorps) and len(line) < 40 :
+                    file1.close();
                     return corps
                 else :
                     corps.append(line)
+        file1.close();
         return corps
 
 def recupConclusion(fichier) :
