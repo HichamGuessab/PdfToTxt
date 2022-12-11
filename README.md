@@ -27,7 +27,7 @@ Pour l'installer, vous pouvez éxécuter la commande suivante dans un terminal L
 #### Générer un fichier xml
 
 ```http
-  python3 fichier.py -x <chemin>
+  python3 fichier.py <chemin> -x 
 ```
 
 | Parametre | Type     | Description                |
@@ -39,7 +39,7 @@ Pour l'installer, vous pouvez éxécuter la commande suivante dans un terminal L
 #### Générer un fichier txt
 
 ```http
-  python3 fichier.py -t <chemin>
+  python3 fichier.py <chemin> -t 
 ```
 
 | Parametre | Type     | Description                |
@@ -47,17 +47,17 @@ Pour l'installer, vous pouvez éxécuter la commande suivante dans un terminal L
 | `-t` | `string` | **Requis**. Indication pour la conversion en txt |
 | `<chemin>` | `string` | **Requis**. Chemin absolu du dossier contenant les articles au format txt |
 
-#### python3 fichier.py -t /home/nas-wks01/users/uapv2104331/IdeaProjects/pdftotxt/PDF
+#### python3 fichier.py Pdftotext -t 
 
 Extrait toutes les informations des fichiers du dossier indiqué et redirige les sorties vers un dossier ApresAnalyse.
 
 
 ## Auteurs
 
-- [@AbdelghaniRechidi](https://gitlab.com/uapv2002373)
-- [@HichamGuessab](https://gitlab.com/HichamGsb)
-- [@NicolasUrban](https://gitlab.com/nclsurban)
-- [@WalidMedouaz](https://gitlab.com/WalidME)
+- [AbdelghaniRechidi](https://gitlab.com/uapv2002373)
+- [HichamGuessab](https://gitlab.com/HichamGsb)
+- [NicolasUrban](https://gitlab.com/nclsurban)
+- [WalidMedouaz](https://gitlab.com/WalidME)
 
 
 
