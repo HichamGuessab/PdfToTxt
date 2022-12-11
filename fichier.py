@@ -447,21 +447,33 @@ if utiliserParseur :
         for file in files:
             print(i, " ", file)
             i+=1
-        print(i, "  Quitter")
+        print("-1  Quitter")
         choix = input("Entrez les numéros des fichier à analyser : ")
-        choix = choix.strip()
+        choix = choix.split(',')
+        fullNumber = True
+        outOfRangeIndex = False
+        for nombre in choix:
+            if(not nombre.isnumeric()):
+                fullNumber = False
+                break
+            if(int(nombre) < 0 or int(nombre) >= i):
+                outOfRangeIndex = True
+                break
         if(choix):
-            if(choix == str(i)):
+            if(choix[0] == "-1"):
                 print("Fin du programme")
                 break
             else:
-                choix = list(choix.strip(" "))
-                print(choix)
                 var = 0
                 my_array = []
-                for i in choix:
-                    my_array.append(files[int(i)])
-                print(my_array)
+                for file in choix:
+                    if(fullNumber and not outOfRangeIndex):
+                        my_array.append(files[int(file)])
+                    else:
+                        if(not fullNumber):
+                            print("Entrez une suite de nombres !")
+                        if(outOfRangeIndex):
+                            print("Entrez des nombres correspondants à ceux affichés !")
 
                 format = typeSortie
                 format = format.strip()
@@ -473,6 +485,7 @@ if utiliserParseur :
         tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
         folderName = path+"Apres_Analyse"
         createAfterDeleteDirectory(folderName)
+        print("\n")
 
         # print(tableOfNamesOfTxtFilesWithoutDotTxt)
         # print(recupNamesOfTheTxtFiles(path))
@@ -484,6 +497,8 @@ if utiliserParseur :
             pathFile = path + x
             # Creer le fichier "x"
             createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+            print("\n")
+
             # Ecrire dans le fichier "x"
             with open(folderName+"/"+ tableOfNamesOfTxtFilesWithoutDotTxt[i] + ".txt", "a", encoding="ascii", errors='ignore') as f:
                 # Ecrire le nom de fichier sans espace
