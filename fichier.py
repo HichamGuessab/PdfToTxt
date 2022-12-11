@@ -3,7 +3,6 @@ import sys
 import shutil
 import re
 import subprocess
-from xml_file import *
 
 # Utilisation : python3 fichier.py dossier_contenant_les_fichiers txt
 
@@ -546,8 +545,8 @@ def convertToXml(v):
             f.write("\n</article>")
             f.close()
             # Supprime la sortie de pdftotext
-            if utiliserParseur:
-                os.remove(pathFile)
+            # if utiliserParseur:
+            #     os.remove(pathFile)
         i += 1
 
 def convertToTxt(v):
@@ -658,8 +657,8 @@ def convertToTxt(v):
             f.write("\n")
 
             # Supprime la sortie de pdftotext
-            if utiliserParseur:
-                os.remove(pathFile)
+            # if utiliserParseur:
+            #     os.remove(pathFile)
         i += 1
 
 if len(sys.argv) < 3 or len(sys.argv) > 4:
@@ -682,52 +681,70 @@ if len(sys.argv) == 4:
 
 # Debut du parseur
 if utiliserParseur :
-    files = recupNamesOfTheTxtFiles(path)
-    #for file in files:
-        #os.system("pdftotext "+path+file.replace(" ","\\ "))
+    filesPdf = recupNamesOfThePdfFiles(path)
+    for file in filesPdf:
+        os.system("pdftotext "+path+file.replace(" ","\\ "))
+files = recupNamesOfTheTxtFiles(path)
+#Fin du parseur
 
-    while True :
-        i = 0
-        for file in files:
-            print(i, " ", file)
-            i+=1
-        print("-1  Quitter")
-        choix = input("Entrez les numéros des fichier à analyser : ")
-        choix = choix.split(',')
-        fullNumber = True
-        outOfRangeIndex = False
-        for nombre in choix:
-            if(not nombre.isnumeric()):
-                fullNumber = False
-                break
-            if(int(nombre) < 0 or int(nombre) >= i):
-                outOfRangeIndex = True
-                break
-        if(choix):
-            if(choix[0] == "-1"):
-                print("Fin du programme")
-                break
-            else:
-                var = 0
-                choixTab = []
-                for file in choix:
-                    if(fullNumber and not outOfRangeIndex):
-                        choixTab.append(files[int(file)])
-                    else:
-                        if(not fullNumber):
-                            print("Entrez une suite de nombres !")
-                        if(outOfRangeIndex):
-                            print("Entrez des nombres correspondants à ceux affichés !")
+i = 0
+for file in files:
+    print(i, " ", file)
+    i+=1
+print("-1  Quitter")
+choix = input("Entrez les numéros des fichier à analyser : ")
+choix = choix.split(',')
+fullNumber = True
+outOfRangeIndex = False
+choixFiles = list()
+for nombre in choix:
+    if nombre.isnumeric() and int(nombre) >=0 and int(nombre) < len(files):
+        choixFiles.append(files[int(nombre)])
+if(typeSortie == "-t"):
+    convertToTxt(choixFiles)
+elif(typeSortie == "-x"):
+    convertToXml(choixFiles)
+else:
+    printf("Second argument incorrect")
 
-                if(typeSortie == "-t"):
-                    convertToTxt(choixTab)
-                elif(typeSortie == "-x"):
-                    convertToXml(choixTab)
-                else :
-                    print("Entrez l'option -t ou -x !")
-                    break
 
-        createAfterDeleteDirectory("txt2XML")
+
+
+
+
+
+# for nombre in choix:
+#     if(not nombre.isnumeric()):
+#         fullNumber = False
+#         break
+#     if(int(nombre) < 0 or int(nombre) >= i):
+#         outOfRangeIndex = True
+#         break
+# if(choix):
+#     if(choix[0] == "-1"):
+#         print("Fin du programme")
+#         exit()
+#     else:
+#         var = 0
+#         choixTab = []
+#         for file in choix:
+#             if(fullNumber and not outOfRangeIndex):
+#                 choixTab.append(files[int(file)])
+#             else:
+#                 if(not fullNumber):
+#                     print("Entrez une suite de nombres !")
+#                 if(outOfRangeIndex):
+#                     print("Entrez des nombres correspondants à ceux affichés !")
+
+#         if(typeSortie == "-t"):
+#             convertToTxt(choixTab)
+#         elif(typeSortie == "-x"):
+#             convertToXml(choixTab)
+#         else :
+#             print("Entrez l'option -t ou -x !")
+#             exit()
+
+# createAfterDeleteDirectory("txt2XML")
 
 
 
