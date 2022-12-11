@@ -131,7 +131,7 @@ def RecupTitle(fichier):
     # Si la prochaine est un saut de ligne, je passe à la prochaine ligne
     diffWord = False
     while(diffWord == False):
-        if any(x in liste[0] for x in skipCharacters) or re.search(r'\d', ligne) or len(ligne.split()) == 1: # Si on rencontre un caractère qui ne fait pas parti du titre
+        if any(x in liste[0] for x in skipCharacters): # Si on rencontre un caractère qui ne fait pas parti du titre
             ligne = file1.readline() # Passer à la ligne suivante
             liste = list(ligne.split(" "))
             nb_title_line += 1
@@ -163,12 +163,14 @@ def RecupTitle(fichier):
         finalTitre+=" "
     # print(finalTitre)
     return finalTitre
+
 # Recuperer l'abstract d'un fichier
 def RecupAbstract(fichier):
-    keyword = ["Introduction", "INTRODUCTION","I NTRODUCTION", "introduction"]
+    keyword = ["Introduction", "INTRODUCTION","I NTRODUCTION", "introduction", "INDEX", "Index", "index", "Corresponding author"]
     # print("Recuperation des resumes de l'auteur")
     word1 = "Abstract"
     word2 = "ABSTRACT"
+    word3 = "abstract"
     global nb_abstract_line 
     nb_abstract_line = 0
     
@@ -178,7 +180,7 @@ def RecupAbstract(fichier):
     file = open(fichier, "r", encoding="ascii", errors='ignore')
     for line in file:
         nb_abstract_line += 1
-        if word1 in line or word2 in line:
+        if word1 in line or word2 in line or word3 in line:
             # print("ABSTRACT found ! Line : ")
             # print(nb_abstract_line)
             abstractFound = True
@@ -199,7 +201,7 @@ def RecupAbstract(fichier):
         for i in range(len(keyword)):
             if keywordFound == True:
                 break
-            if keyword[i] in line:
+            if (keyword[i] in line) and (nb_keyword_line > nb_abstract_line):
                 # print("KEYWORD keywordFound ! Line : ")
                 # print(nb_keyword_line)
                 keywordFound = True
@@ -250,7 +252,27 @@ def RecupAbstract(fichier):
     #             break
         # for i in range(len(tableau_base)):
         #     print(tableau_base[i])
+        
+    # supprimer les lignes qui possède un ": " sur les 10 premiers caractères
     tableau_base = supp_void_lines_from_table(tableau_base)
+    keyword = [": "]
+    endroit = 200
+    for x in tableau_base:
+        if(": " in x):
+            if(x.index(": ") < 10):
+                endroit = tableau_base.index(x)
+                break
+    
+    tableau_base = tableau_base[:endroit]
+    
+    #supprimer la ligne du tableau qui commence par un nombre
+    for x in tableau_base:
+        if(x != ""):
+            for i in range(5):
+                # print(x[i])
+                if(x[i].isdigit() and x[i+1].isdigit() and x[i+2].isdigit() and x[i+3]):
+                    tableau_base.remove(x)
+                    break
     return tableau_base
     
 def RecupAuteurs(fichier):
@@ -382,7 +404,6 @@ def recupDiscussion(fichier) :
 
 def recupReferences(fichier):
     characters = ["References", "REFERENCES"]
-    skipCharacters = ["A APPENDIX"]
     referenceLine = 1
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
     numLine = 1
@@ -393,14 +414,6 @@ def recupReferences(fichier):
     file.close()
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
     references = file.readlines()[referenceLine:numLine-1]
-    lastLine = referenceLine
-    for line in references:
-        lastLine += 1
-        if(any(x in line for x in skipCharacters)):
-            file.close()
-            file = open(fichier, 'r', encoding="ascii", errors='ignore')
-            references = file.readlines()[referenceLine:lastLine-1]
-            return references
     file.close()
     # print(references)
     return references
