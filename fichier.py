@@ -441,6 +441,37 @@ if utiliserParseur :
     tableOfNamesOfPdfFilesWithDotPdf = recupNamesOfThePdfFiles(path)
     for file in tableOfNamesOfPdfFilesWithDotPdf:
         os.system("pdftotext "+path+file.replace(" ","\\ "))
+
+    while True :
+
+    i = 0
+    for file in files:
+        print(i, " ", file)
+        i+=1
+    print(i, "Quitter")
+    choix = input("Entrez les numéros des fichier à analyser : ")
+    choix = choix.strip()
+    if(choix):
+        if(choix == str(i)):
+            print("Fin du programme")
+            break
+        else:
+            choix = list(choix.strip(" "))
+            print(choix)
+            for i in choix:
+                print(files[int(i)])
+            format = input("Entrez -x pour convertir en xml ou -t pour convertir en txt : ")
+            format = format.strip()
+            createAfterDeleteDirectory(folderName)
+            createAfterDeleteDirectory("txt2XML")
+            if(format == str("-x")):    
+                for i in choix :
+                    analyseToTxt(files[int(i)])
+                    analyseToTxt(files[int(i)])
+            else :
+                for i in choix:
+                    analyseToTxt(files[int(i)])
+                    
 # Fin du parseur. Il suffit de mettre les txts de Nico dans le dossier path avant de lancer le programme avec un troisième argument "-n" pour ne pas l'utiliser
 
 tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
