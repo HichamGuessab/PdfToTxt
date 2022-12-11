@@ -266,9 +266,9 @@ def RecupAbstract(fichier):
     
     #supprimer la ligne du tableau qui commence par un nombre
     for x in tableau_base:
-        if(x != ""):
+        if(x != "" and len(x) > 8):
             for i in range(5):
-                # print(x[i])
+                #print(x[i])
                 if(x[i].isdigit() and x[i+1].isdigit() and x[i+2].isdigit() and x[i+3]):
                     tableau_base.remove(x)
                     break
