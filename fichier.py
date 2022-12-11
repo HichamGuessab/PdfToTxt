@@ -382,6 +382,7 @@ def recupDiscussion(fichier) :
 
 def recupReferences(fichier):
     characters = ["References", "REFERENCES"]
+    skipCharacters = ["A APPENDIX"]
     referenceLine = 1
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
     numLine = 1
@@ -392,6 +393,14 @@ def recupReferences(fichier):
     file.close()
     file = open(fichier, 'r', encoding="ascii", errors='ignore')
     references = file.readlines()[referenceLine:numLine-1]
+    lastLine = referenceLine
+    for line in references:
+        lastLine += 1
+        if(any(x in line for x in skipCharacters)):
+            file.close()
+            file = open(fichier, 'r', encoding="ascii", errors='ignore')
+            references = file.readlines()[referenceLine:lastLine-1]
+            return references
     file.close()
     # print(references)
     return references
