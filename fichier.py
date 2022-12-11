@@ -131,7 +131,7 @@ def RecupTitle(fichier):
     # Si la prochaine est un saut de ligne, je passe à la prochaine ligne
     diffWord = False
     while(diffWord == False):
-        if any(x in liste[0] for x in skipCharacters) or re.search(r'\d', ligne): # Si on rencontre un caractère qui ne fait pas parti du titre
+        if any(x in liste[0] for x in skipCharacters) or re.search(r'\d', ligne) or len(ligne.split()) == 1: # Si on rencontre un caractère qui ne fait pas parti du titre
             ligne = file1.readline() # Passer à la ligne suivante
             liste = list(ligne.split(" "))
             nb_title_line += 1
