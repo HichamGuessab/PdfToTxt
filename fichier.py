@@ -11,7 +11,7 @@ from xml_file import *
 # Type de sortie = sys.argv[2]
 # utiliser ou non le parseur = sys.argv[3]
 
-# Récupérer le nom des fichiers du dossier contenant les fichiers en .pdf
+# Recuperer le nom des fichiers du dossier contenant les fichiers en .pdf
 def recupNamesOfThePdfFiles(path):
     tableau_des_pdf = os.listdir(path)
     maxi = len(tableau_des_pdf)
@@ -24,7 +24,7 @@ def recupNamesOfThePdfFiles(path):
         i+=1
     return tableau_des_pdf
 
-# Récupérer le nom des fichiers du dossier contenant les fichiers en .txt
+# Recuperer le nom des fichiers du dossier contenant les fichiers en .txt
 def recupNamesOfTheTxtFiles(path):
     tableau_des_txt = os.listdir(path)
     maxi = len(tableau_des_txt)
@@ -35,6 +35,7 @@ def recupNamesOfTheTxtFiles(path):
             i-=1
             maxi-=1
         i+=1
+    # print(tableau_des_txt)
     return tableau_des_txt
 
 def deleteDotTxtFromAStringTable(table):
@@ -43,12 +44,12 @@ def deleteDotTxtFromAStringTable(table):
         tableau_des_TXT_sans_le_txt[i] = table[i][:-4]
     return tableau_des_TXT_sans_le_txt
 
-# Supprimer le dossier Apres_Analyse s'il existe, le créer après vérification
+# Supprimer le dossier Apres_Analyse s'il existe, le creer après verification
 def createAfterDeleteDirectory(folderName: str):
     if os.path.exists(folderName):
         shutil.rmtree(folderName)
         print(folderName+" directory deleted")
-    # Création du dossier folderName
+    # Creation du dossier folderName
     os.mkdir(folderName)
     print(folderName+" directory created")
 
@@ -67,51 +68,51 @@ def suppSpacesFromStringTables(stringTable):
 # Supprimer les espaces d'un String
 def suppSpacesFromString(name: str):
     # print("Suppression des espaces d'un String")
-    name.replace(" ", "_")
-    return name
+    x = name.replace(" ", "_")
+    return x
 
 def supp_start_spaces_from_lines_(table):
-    # Suppression des espaces au début de toutes les lignes    
-    # print("Tableau sans espaces au début")
+    # Suppression des espaces au debut de toutes les lignes    
+    # print("Tableau sans espaces au debut")
     for i in range(len(table)):
         table[i] = table[i].lstrip() 
     return table
 
 def supp_void_lines_from_table(table):
     # Trouver l'index 
-    num_line_tab = 0                        # le numéro de la ligne (dans le tableau)
+    num_line_tab = 0                        # le numero de la ligne (dans le tableau)
     i = 0
     for i in range(len(table)):
         num_line_tab+=1
         index = table[i].find("                                   ")
         # print("Ligne : ", num_line_tab)
-        # print("Espaces trouvées index :", index)
+        # print("Espaces trouvees index :", index)
         table[i] = table[i][:index]
     return table
 
-# Créer tous les fichiers d'un tableau ayant le même nom sans les espaces
+# Creer tous les fichiers d'un tableau ayant le même nom sans les espaces
 def createFileInAFolder(fileName: str, folderName: str):
-    print("Création du fichier "+fileName + " dans le directory " + folderName)
+    print("Creation du fichier "+fileName + " dans le directory " + folderName)
     # for i in range(len(tableauDesTxtSansLeTxt)):
     nom = fileName+".txt"
-    f = open(folderName+"/"+nom, "x")         # Création du fichier dans le dossier "Apres_Analyse"
+    f = open(folderName+"/"+nom, "x")         # Creation du fichier dans le dossier "Apres_Analyse"
     f.close()
 
 # Fonction qui ne sert plus à rien : On la garde au cas où
 def supp_lines_from_table_after_5_spaces(table):
     # Suppression de la fin des lignes à partir de là où il y a 5 espaces
     # Trouver l'index 
-    num_line_tab = 0                        # le numéro de la ligne (dans le tableau)
+    num_line_tab = 0                        # le numero de la ligne (dans le tableau)
     i = 0
     for i in range(len(table)):
         num_line_tab+=1
         index = table[i].find("         ")
         # print("Ligne : ", num_line_tab)
-        # print("Espaces trouvées index :", index)
+        # print("Espaces trouvees index :", index)
         table[i] = table[i][:index]
     return table
 
-# Recupérer le titre d'un fichier (!= nom d'un fichier)
+# Recuperer le titre d'un fichier (!= nom d'un fichier)
 def RecupTitle(fichier):
     connectors = ["with", "without", "of", "for", "An ", "OF"] # Mots de liaisons
     skipCharacters = ["From", "Journal", "Submitted"] # Mot qui ne font pas parti du titre
@@ -123,7 +124,7 @@ def RecupTitle(fichier):
     ligne = file1.readline()
     ligne_v = ligne
     nb_title_line += 1
-    liste = list(ligne.split(" ")) # Récupérer la ligne sous forme de liste pour comparer les mots
+    liste = list(ligne.split(" ")) # Recuperer la ligne sous forme de liste pour comparer les mots
     taille = len(liste)
             
     # Tant que je trouve un mot pas bon je passe à la prochaine ligne
@@ -157,15 +158,15 @@ def RecupTitle(fichier):
     file1.close()
     
     finalTitre = ""
-    for t in titre.split(): # On ajoute les éléments du tableau contenant tout les mots du titre dans notre titre final
+    for t in titre.split(): # On ajoute les elements du tableau contenant tout les mots du titre dans notre titre final
         finalTitre+=t
         finalTitre+=" "
     # print(finalTitre)
     return finalTitre
-# Récupérer l'abstract d'un fichier
+# Recuperer l'abstract d'un fichier
 def RecupAbstract(fichier):
     keyword = ["Introduction", "INTRODUCTION","I NTRODUCTION", "introduction"]
-    # print("Récupération des résumés de l'auteur")
+    # print("Recuperation des resumes de l'auteur")
     word1 = "Abstract"
     word2 = "ABSTRACT"
     global nb_abstract_line 
@@ -205,7 +206,7 @@ def RecupAbstract(fichier):
 
 # nb_abstract_line est maintenant la ligne où le asbtract se situe
 # nb_keyword_line est maintenant la ligne où le keyword se situe
-    # On doit traiter le cas où le mot "Abstract" n'est pas présent
+    # On doit traiter le cas où le mot "Abstract" n'est pas present
     if(abstractFound == True):
         with open(fichier, "r", encoding="ascii", errors='ignore') as f:
             lines = f.readlines()[nb_abstract_line-1:nb_keyword_line-1]
@@ -217,7 +218,7 @@ def RecupAbstract(fichier):
                 i+=1
     else:
         with open(fichier, "r", encoding="ascii", errors='ignore') as f:
-            # On a notre ligne Introduction (nb_keyword_line) mais pas notre mot clé "Abstract"
+            # On a notre ligne Introduction (nb_keyword_line) mais pas notre mot cle "Abstract"
             # Faut maintenant stocker dans une liste en remontant le keyword 
             lines = f.readlines()[nb_keyword_line-2:nb_keyword_line-1]
             tableau_base = [""] * len(lines)
@@ -227,11 +228,11 @@ def RecupAbstract(fichier):
                 tableau_base[i] = line
                 i+=1
     file.close()
-    # Traitement du cas où le mot clé "abstract" n'a pas été trouvé
+    # Traitement du cas où le mot cle "abstract" n'a pas ete trouve
     # pdftotxtV4
     if(abstractFound == False):
         nb_abstract_line = nb_keyword_line -1
-    #     # print("Abstract non trouvé")
+    #     # print("Abstract non trouve")
     #     # print(nb_keyword_line)
     #     j = 0
     #     for i in range(len(tableau_base)):
@@ -378,6 +379,7 @@ def recupDiscussion(fichier) :
                 # print(line)
                 discussion.append(line)
     return discussion
+
 def recupReferences(fichier):
     characters = ["References", "REFERENCES"]
     referenceLine = 1
@@ -426,14 +428,18 @@ tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesO
 folderName = path+"Apres_Analyse"
 createAfterDeleteDirectory(folderName)
 
+# print(tableOfNamesOfTxtFilesWithoutDotTxt)
+# print(recupNamesOfTheTxtFiles(path))
 i = 0
-for x in tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
-    # PathFile = fichier d'où l'on va récupérer les informations
+v = recupNamesOfTheTxtFiles(path)
+# print(v)
+for x in v:
+    # PathFile = fichier d'où l'on va recuperer les informations
     pathFile = path + x
-    # Créer le fichier "x"
+    # Creer le fichier "x"
     createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
     # Ecrire dans le fichier "x"
-    with open(folderName+"/"+ x, "a", encoding="ascii", errors='ignore') as f:
+    with open(folderName+"/"+ tableOfNamesOfTxtFilesWithoutDotTxt[i] + ".txt", "a", encoding="ascii", errors='ignore') as f:
         # Ecrire le nom de fichier sans espace
         f.write(tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
         f.write("\n")
@@ -441,57 +447,82 @@ for x in tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted:
         f.write("\n")
 
         # Ecrire le nom du titre
-        f.write(RecupTitle(pathFile)+"\n")
+        titleTableOfStrings = RecupTitle(pathFile)
+        if(not titleTableOfStrings):
+            f.write("Title non trouve.")
+        else:
+            f.write(titleTableOfStrings)
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
 
         # Ecrire l'abstract
-        tableOfStrings = RecupAbstract(pathFile)
-        for v in range(len(tableOfStrings)):
-            f.write(tableOfStrings[v]+"\n")
+        abstractTableOfStrings = RecupAbstract(pathFile)
+        if(not abstractTableOfStrings):
+            f.write("Abstract non trouve.")
+        else:
+            for v in range(len(abstractTableOfStrings)):
+                f.write(abstractTableOfStrings[v]+"\n")
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
         auteursTableStrings = RecupAuteurs(pathFile)
-        for v in range(len(auteursTableStrings)):
-            f.write(auteursTableStrings[v])
+        if(not auteursTableStrings):
+                f.write("Auteurs non trouvee.")
+        else:
+            for v in range(len(auteursTableStrings)):
+                f.write(auteursTableStrings[v])
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
         introductionTableStrings = recupIntroduction(pathFile)
-        for v in range(len(introductionTableStrings)):
-            f.write(introductionTableStrings[v])
+        if(not introductionTableStrings):
+            f.write("Introduction non trouvee.")
+        else:
+            for v in range(len(introductionTableStrings)):
+                f.write(introductionTableStrings[v])
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
         corpsTableStrings = recupCorps(pathFile)
-        for v in range(len(corpsTableStrings)):
-            f.write(corpsTableStrings[v])
+        if(not corpsTableStrings):
+            f.write("Corps non trouve.")
+        else:
+            for v in range(len(corpsTableStrings)):
+                f.write(corpsTableStrings[v])
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
         conclusionTableStrings = recupConclusion(pathFile)
-        for v in range(len(conclusionTableStrings)):
-            f.write(conclusionTableStrings[v])
+        if(not conclusionTableStrings):
+            f.write("Conclusion non trouvee.")
+        else:
+            for v in range(len(conclusionTableStrings)):
+                f.write(conclusionTableStrings[v])
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
-        DiscussionTableStrings = recupDiscussion(pathFile)
-        for v in range(len(DiscussionTableStrings)):
-            f.write(DiscussionTableStrings[v])
+        discussionTableStrings = recupDiscussion(pathFile)
+        if(not discussionTableStrings):
+            f.write("Discussion non trouvee.")
+        else:
+            for v in range(len(discussionTableStrings)):
+                f.write(discussionTableStrings[v])
         f.write("\n")
         f.write("______________________________")
         f.write("\n")
         
         referencesTableStrings = recupReferences(pathFile)
-        for v in range(len(referencesTableStrings)):
-            f.write(referencesTableStrings[v])
+        if(not referencesTableStrings):
+            f.write("References non trouvees.")
+        else:            
+            for v in range(len(referencesTableStrings)):
+                f.write(referencesTableStrings[v])
         f.write("\n")
 
         # Supprime la sortie de pdftotext

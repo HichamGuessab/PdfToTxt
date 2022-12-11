@@ -6,7 +6,7 @@ createAfterDeleteDirectory(folderName)
 createAfterDeleteDirectory("txt2XML")
 files = recupNamesOfTheTxtFiles('Pdftotext')
 
-def convertToTxt(fichier):
+def analyseToTxt(fichier):
     path = "Pdftotext/"
     TableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
     TableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(TableOfNamesOfTxtFilesWithDotTxt)
@@ -85,7 +85,7 @@ def convertToTxt(fichier):
             f.write(ReferencesTableStrings[v])
         f.write("\n")
 
-def ConvertToXml(file):
+def analyseToTxt(file):
     sortie = open_file("Apres_Analyse/"+file)
     sortie = split_file(sortie)
     generate_xml(sortie)
@@ -114,8 +114,8 @@ while True :
             createAfterDeleteDirectory("txt2XML")
             if(format == str("-x")):    
                 for i in choix :
-                    convertToTxt(files[int(i)])
-                    ConvertToXml(files[int(i)])
+                    analyseToTxt(files[int(i)])
+                    analyseToTxt(files[int(i)])
             else :
                 for i in choix:
-                    convertToTxt(files[int(i)])
+                    analyseToTxt(files[int(i)])
