@@ -12,13 +12,19 @@ Pour l'installer, vous pouvez éxécuter la commande suivante dans un terminal L
 
 `sudo apt install poppler-utils` ou `sudo apt install poppler-utils`
 
-### ATTENTION
+## ATTENTION
 Nous avons rencontré des soucis sur la version de notre pdftotext (4.0) :
 Nous nous étions basé sur toute une version avec laquelle nous ne pouvions pas interpréter avec Python.
 Nous avons fait part de notre problème à M. Moreno Jimenez Luis Gil ainsi qu'à M. Juan-Manuel Torres-Moreno et nous nous sommes mit d'accord : 
 - Les corpus donnés dans le dossier "Corpus" sont **déjà au format txt** et non au format pdf.
 - Notre programme permet ainsi de récupérer les informations présentes dans des fichiers txt.
 
+### UTILISATION DU PROGRAMME PAR LE PROFESSEUR
+
+Etant donné les détails expliqué si dessous vous devez utiliser notre programme comme ceci :
+```http
+  python3 fichier.py <chemin> (-t | -x) 
+```
 
 ## Fonctionnalités
 
