@@ -48,11 +48,15 @@ Il suffit de lister, séparer par des virgules, les numéros associés aux fichi
 
 ### Exemple : 
 0   fichier0.txt
+
 1   fichier1.txt
+
 2   fichier2.txt
+
 3   fichier3.txt
 
 -1  Quitter
+
 Entrez les numéros des fichier à analyser : 0,1,3
 
 Analysera les fichiers "fichier0.txt","fichier1.txt" et "fichier3"
