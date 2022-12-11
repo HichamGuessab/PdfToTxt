@@ -418,6 +418,253 @@ def recupReferences(fichier):
     # print(references)
     return references
 
+def convertToXml(v):
+    tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
+
+    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
+    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
+    folderName = path+"Apres_Analyse"
+    createAfterDeleteDirectory(folderName)
+    print("\n")
+
+    # print(tableOfNamesOfTxtFilesWithoutDotTxt)
+    # print(recupNamesOfTheTxtFiles(path))
+    i = 0
+    # print(v)
+    for x in v:
+        # PathFile = fichier d'où l'on va recuperer les informations
+        pathFile = path + x
+        # Creer le fichier "x"
+        createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+        print("\n")
+
+        # Ecrire dans le fichier "x"
+        with open(folderName+"/"+ tableOfNamesOfTxtFilesWithoutDotTxt[i] + ".xml", "a", encoding="ascii", errors='ignore') as f:
+            f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
+            f.write("<article>\n")
+            # Ecrire le nom de fichier sans espace
+            f.write("\n<preamble>\n")
+            f.write(tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
+            f.write("</preamble>\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            # Ecrire le nom du titre
+            f.write("\n<titre>")
+            titleTableOfStrings = RecupTitle(pathFile)
+
+            if(not titleTableOfStrings):
+                f.write("Title non trouve.")
+            else:
+
+                f.write(titleTableOfStrings)
+            f.write("\n")
+            f.write("</titre>\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            # Ecrire l'abstract
+            abstractTableOfStrings = RecupAbstract(pathFile)
+            f.write("\n<abstract>")
+            if(not abstractTableOfStrings):
+                f.write("Abstract non trouve.")
+            else:
+                for v in range(len(abstractTableOfStrings)):
+                    f.write(abstractTableOfStrings[v]+"\n")
+            f.write("\n")
+            f.write("</abstract>\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            f.write("\n<auteur>")
+            auteursTableStrings = RecupAuteurs(pathFile)
+            if(not auteursTableStrings):
+                    f.write("Auteurs non trouvee.")
+            else:
+                for v in range(len(auteursTableStrings)):
+                    f.write(auteursTableStrings[v])
+            f.write("\n")
+            f.write("</auteur>\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            f.write("\n<introduction>")
+            introductionTableStrings = recupIntroduction(pathFile)
+            if(not introductionTableStrings):
+                f.write("Introduction non trouvee.")
+            else:
+                for v in range(len(introductionTableStrings)):
+                    f.write(introductionTableStrings[v])
+            f.write("\n")
+            f.write("</introduction>\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            f.write("\n<corps>")
+            corpsTableStrings = recupCorps(pathFile)
+            if(not corpsTableStrings):
+                f.write("Corps non trouve.")
+            else:
+                for v in range(len(corpsTableStrings)):
+                    f.write(corpsTableStrings[v])
+            f.write("\n")
+            f.write("</corps>\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            f.write("\n<conclusion>")
+            conclusionTableStrings = recupConclusion(pathFile)
+            if(not conclusionTableStrings):
+                f.write("Conclusion non trouvee.")
+            else:
+                for v in range(len(conclusionTableStrings)):
+                    f.write(conclusionTableStrings[v])
+            f.write("\n")
+            f.write("</conclusion>\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            f.write("\n<discussion>")
+            discussionTableStrings = recupDiscussion(pathFile)
+            if(not discussionTableStrings):
+                f.write("Discussion non trouvee.")
+            else:
+                for v in range(len(discussionTableStrings)):
+                    f.write(discussionTableStrings[v])
+            f.write("\n")
+            f.write("</discussion>\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            f.write("\n<biblio>")
+            referencesTableStrings = recupReferences(pathFile)
+            if(not referencesTableStrings):
+                f.write("References non trouvees.")
+            else:            
+                for v in range(len(referencesTableStrings)):
+                    f.write(referencesTableStrings[v])
+            f.write("\n")
+            f.write("\n</biblio>\n")
+            f.write("\n</article>")
+            f.close()
+            # Supprime la sortie de pdftotext
+            if utiliserParseur:
+                os.remove(pathFile)
+        i += 1
+
+def convertToTxt(v):
+    tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
+
+    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
+    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
+    folderName = path+"Apres_Analyse"
+    createAfterDeleteDirectory(folderName)
+    print("\n")
+
+    # print(tableOfNamesOfTxtFilesWithoutDotTxt)
+    # print(recupNamesOfTheTxtFiles(path))
+    i = 0
+    # print(v)
+    for x in v:
+        # PathFile = fichier d'où l'on va recuperer les informations
+        pathFile = path + x
+        # Creer le fichier "x"
+        createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
+        print("\n")
+
+        # Ecrire dans le fichier "x"
+        with open(folderName+"/"+ tableOfNamesOfTxtFilesWithoutDotTxt[i] + ".txt", "a", encoding="ascii", errors='ignore') as f:
+            # Ecrire le nom de fichier sans espace
+            f.write(tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            # Ecrire le nom du titre
+            titleTableOfStrings = RecupTitle(pathFile)
+            if(not titleTableOfStrings):
+                f.write("Title non trouve.")
+            else:
+                f.write(titleTableOfStrings)
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+
+            # Ecrire l'abstract
+            abstractTableOfStrings = RecupAbstract(pathFile)
+            if(not abstractTableOfStrings):
+                f.write("Abstract non trouve.")
+            else:
+                for v in range(len(abstractTableOfStrings)):
+                    f.write(abstractTableOfStrings[v]+"\n")
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            auteursTableStrings = RecupAuteurs(pathFile)
+            if(not auteursTableStrings):
+                    f.write("Auteurs non trouvee.")
+            else:
+                for v in range(len(auteursTableStrings)):
+                    f.write(auteursTableStrings[v])
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            introductionTableStrings = recupIntroduction(pathFile)
+            if(not introductionTableStrings):
+                f.write("Introduction non trouvee.")
+            else:
+                for v in range(len(introductionTableStrings)):
+                    f.write(introductionTableStrings[v])
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            corpsTableStrings = recupCorps(pathFile)
+            if(not corpsTableStrings):
+                f.write("Corps non trouve.")
+            else:
+                for v in range(len(corpsTableStrings)):
+                    f.write(corpsTableStrings[v])
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            conclusionTableStrings = recupConclusion(pathFile)
+            if(not conclusionTableStrings):
+                f.write("Conclusion non trouvee.")
+            else:
+                for v in range(len(conclusionTableStrings)):
+                    f.write(conclusionTableStrings[v])
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            discussionTableStrings = recupDiscussion(pathFile)
+            if(not discussionTableStrings):
+                f.write("Discussion non trouvee.")
+            else:
+                for v in range(len(discussionTableStrings)):
+                    f.write(discussionTableStrings[v])
+            f.write("\n")
+            f.write("______________________________")
+            f.write("\n")
+            
+            referencesTableStrings = recupReferences(pathFile)
+            if(not referencesTableStrings):
+                f.write("References non trouvees.")
+            else:            
+                for v in range(len(referencesTableStrings)):
+                    f.write(referencesTableStrings[v])
+            f.write("\n")
+
+            # Supprime la sortie de pdftotext
+            if utiliserParseur:
+                os.remove(pathFile)
+        i += 1
+
 if len(sys.argv) < 3 or len(sys.argv) > 4:
     print("Nombre d'arguments incorrect.")
     exit()
@@ -465,130 +712,29 @@ if utiliserParseur :
                 break
             else:
                 var = 0
-                my_array = []
+                choixTab = []
                 for file in choix:
                     if(fullNumber and not outOfRangeIndex):
-                        my_array.append(files[int(file)])
+                        choixTab.append(files[int(file)])
                     else:
                         if(not fullNumber):
                             print("Entrez une suite de nombres !")
                         if(outOfRangeIndex):
                             print("Entrez des nombres correspondants à ceux affichés !")
 
-                format = typeSortie
-                format = format.strip()
-                createAfterDeleteDirectory("txt2XML")
+                if(typeSortie == "-t"):
+                    convertToTxt(choixTab)
+                elif(typeSortie == "-x"):
+                    convertToXml(choixTab)
+                else :
+                    print("Entrez l'option -t ou -x !")
+                    break
 
-        tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
+        createAfterDeleteDirectory("txt2XML")
 
-        tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
-        tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
-        folderName = path+"Apres_Analyse"
-        createAfterDeleteDirectory(folderName)
-        print("\n")
 
-        # print(tableOfNamesOfTxtFilesWithoutDotTxt)
-        # print(recupNamesOfTheTxtFiles(path))
-        i = 0
-        v = my_array
-        # print(v)
-        for x in v:
-            # PathFile = fichier d'où l'on va recuperer les informations
-            pathFile = path + x
-            # Creer le fichier "x"
-            createFileInAFolder(tableOfNamesOfTxtFilesWithoutDotTxt[i], folderName)
-            print("\n")
 
-            # Ecrire dans le fichier "x"
-            with open(folderName+"/"+ tableOfNamesOfTxtFilesWithoutDotTxt[i] + ".txt", "a", encoding="ascii", errors='ignore') as f:
-                # Ecrire le nom de fichier sans espace
-                f.write(tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted[i]+"\n")
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
 
-                # Ecrire le nom du titre
-                titleTableOfStrings = RecupTitle(pathFile)
-                if(not titleTableOfStrings):
-                    f.write("Title non trouve.")
-                else:
-                    f.write(titleTableOfStrings)
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
 
-                # Ecrire l'abstract
-                abstractTableOfStrings = RecupAbstract(pathFile)
-                if(not abstractTableOfStrings):
-                    f.write("Abstract non trouve.")
-                else:
-                    for v in range(len(abstractTableOfStrings)):
-                        f.write(abstractTableOfStrings[v]+"\n")
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                auteursTableStrings = RecupAuteurs(pathFile)
-                if(not auteursTableStrings):
-                        f.write("Auteurs non trouvee.")
-                else:
-                    for v in range(len(auteursTableStrings)):
-                        f.write(auteursTableStrings[v])
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                introductionTableStrings = recupIntroduction(pathFile)
-                if(not introductionTableStrings):
-                    f.write("Introduction non trouvee.")
-                else:
-                    for v in range(len(introductionTableStrings)):
-                        f.write(introductionTableStrings[v])
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                corpsTableStrings = recupCorps(pathFile)
-                if(not corpsTableStrings):
-                    f.write("Corps non trouve.")
-                else:
-                    for v in range(len(corpsTableStrings)):
-                        f.write(corpsTableStrings[v])
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                conclusionTableStrings = recupConclusion(pathFile)
-                if(not conclusionTableStrings):
-                    f.write("Conclusion non trouvee.")
-                else:
-                    for v in range(len(conclusionTableStrings)):
-                        f.write(conclusionTableStrings[v])
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                discussionTableStrings = recupDiscussion(pathFile)
-                if(not discussionTableStrings):
-                    f.write("Discussion non trouvee.")
-                else:
-                    for v in range(len(discussionTableStrings)):
-                        f.write(discussionTableStrings[v])
-                f.write("\n")
-                f.write("______________________________")
-                f.write("\n")
-                
-                referencesTableStrings = recupReferences(pathFile)
-                if(not referencesTableStrings):
-                    f.write("References non trouvees.")
-                else:            
-                    for v in range(len(referencesTableStrings)):
-                        f.write(referencesTableStrings[v])
-                f.write("\n")
-
-                # Supprime la sortie de pdftotext
-                if utiliserParseur:
-                    os.remove(pathFile)
-            i += 1
 
 # Fin du parseur. Il suffit de mettre les txts de Nico dans le dossier path avant de lancer le programme avec un troisième argument "-n" pour ne pas l'utiliser
