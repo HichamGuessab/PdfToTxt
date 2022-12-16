@@ -415,10 +415,8 @@ def recupReferences(fichier):
     return references
 
 def convertToXml(v):
-    tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
-
-    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
-    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
+    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(v)
+    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(v)
     folderName = path+"Apres_Analyse"
     createAfterDeleteDirectory(folderName)
     print("\n")
@@ -550,10 +548,8 @@ def convertToXml(v):
         i += 1
 
 def convertToTxt(v):
-    tableOfNamesOfTxtFilesWithDotTxt = recupNamesOfTheTxtFiles(path)
-
-    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(tableOfNamesOfTxtFilesWithDotTxt)
-    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(tableOfNamesOfTxtFilesWithDotTxt)
+    tableOfNamesOfTxtFilesWithTxtAndSpacesDeleted = suppSpacesFromStringTables(v)
+    tableOfNamesOfTxtFilesWithoutDotTxt = deleteDotTxtFromAStringTable(v)
     folderName = path+"Apres_Analyse"
     createAfterDeleteDirectory(folderName)
     print("\n")
