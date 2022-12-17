@@ -60,9 +60,10 @@ def deleteDirectory(folderName: str):
 # Supprimer les espaces des String d'un tableau de String
 def suppSpacesFromStringTables(stringTable):
     # print("Suppression des espaces des String d'un tableau de String")
+    stringReturn = list();
     for i in range(len(stringTable)):
-        stringTable[i] = suppSpacesFromString(stringTable[i])
-    return stringTable
+        stringReturn.append(suppSpacesFromString(stringTable[i]))
+    return stringReturn
 
 # Supprimer les espaces d'un String
 def suppSpacesFromString(name: str):
@@ -558,7 +559,7 @@ def convertToTxt(v):
     # print(recupNamesOfTheTxtFiles(path))
     i = 0
     # print(v)
-    for x in v:
+    for x in v: 
         # PathFile = fichier d'où l'on va recuperer les informations
         pathFile = path + x
         # Creer le fichier "x"
