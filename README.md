@@ -5,6 +5,14 @@ Ce programme est destiné à récupérer les informations d'un article scientifi
 Il permet ainsi d'analyser tous les articles au format txt d'un dossier et de créer des fichiers txt dans un autre dossier contenant les informations essentielles.
 
 Nous utilisons la *version 4.00* de pdftotext, *sans options*.
+
+## Avant tout
+
+Ce projet est un projet réalisé en groupe afin de s'initier à la méthodologie agile SCRUM.
+L'enseignant jouait le rôle de Product Owner, je (Hicham Guessab) jouait le rôle de SCRUM Master ainsi que de développeur, les autres auteurs de jouaient le rôle de développeur.
+
+Notre parser était celui réalisant le meilleur score de la promotion.
+
 ## Prérequis
 
 Pour éxécuter ce projet, vous avez normalement besoin de l'outil pdftotext.
